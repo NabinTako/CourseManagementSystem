@@ -17,6 +17,8 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
 
@@ -102,6 +104,20 @@ public class Login extends JFrame {
 		panel.add(lblNewLabel_1_1_1);
 		
 		Button button = new Button("Sign Up");
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				button.setBackground(new Color(255, 158, 160));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				button.setBackground(new Color(95, 158, 160));
+			}
+		});
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		button.setBackground(new Color(95, 158, 160));
 		button.setBounds(389, 424, 248, 34);
 		frame.getContentPane().add(button);

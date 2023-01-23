@@ -27,6 +27,8 @@ import javax.swing.JTable;
 import java.awt.Color;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.SystemColor;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
 public class studentDashboard {
 
@@ -42,6 +44,8 @@ public class studentDashboard {
 	private JButton btnConcurancy;
 	private JButton btnModule;
 	private JButton btnTeacher;
+	private JTable TeacherTable;
+	private JTable ClassmateTable;
 
 	/**
 	 * Launch the application.
@@ -144,8 +148,8 @@ public class studentDashboard {
 		btnTeacher = new JButton("Instructors");
 		btnTeacher.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cl_Model_Panel.show(Model_Panel,"name_116840171274100");
 				activeBtn(255, 235, 205, "TeacherBtn");
+				cl_cardPanel.show(panel, "name_211500318189700");
 				
 			}
 		});
@@ -291,15 +295,43 @@ public class studentDashboard {
 		JPanel PeopleView = new JPanel();
 		PeopleView.setBackground(new Color(204, 204, 204));
 		Model_Panel.add(PeopleView, "name_18635330178400");
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
 		GroupLayout gl_PeopleView = new GroupLayout(PeopleView);
 		gl_PeopleView.setHorizontalGroup(
 			gl_PeopleView.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 495, Short.MAX_VALUE)
+				.addGroup(gl_PeopleView.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		gl_PeopleView.setVerticalGroup(
 			gl_PeopleView.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 477, Short.MAX_VALUE)
+				.addGroup(gl_PeopleView.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+					.addContainerGap())
 		);
+		
+		ClassmateTable = new JTable();
+		ClassmateTable.setDefaultEditor(Object.class, null);
+		ClassmateTable.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"Nami", null, "female", "Berry@newWorld.com"},
+				{"Robin", "Devil's child", "female", "Devil@friends.com"},
+				{"Zorro", null, "male", "Alwayslost@places.com"},
+				{"Sanji", null, "male", "Best@cooking.com"},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+			},
+			new String[] {
+				"First Name", "Second Name", "Sex", "Email"
+			}
+		));
+		ClassmateTable.getColumnModel().getColumn(3).setPreferredWidth(150);
+		ClassmateTable.setFont(new Font("Arial", Font.ITALIC, 15));
+		scrollPane_1.setViewportView(ClassmateTable);
 		PeopleView.setLayout(gl_PeopleView);
 		OODP.setDividerLocation(30);
 		
@@ -324,7 +356,7 @@ public class studentDashboard {
 		PeopleBtn_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				cl_Model_panel2.show(Model_panel2,"name_19093441402800");
+				cl_Model_panel2.show(Model_panel2,"name_211500318189700");
 			}
 		});
 		PeopleBtn_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -363,6 +395,43 @@ public class studentDashboard {
 		
 		JPanel InstructorPlane = new JPanel();
 		panel.add(InstructorPlane, "name_116840171274100");
+		
+		JPanel TeacherPanel = new JPanel();
+		panel.add(TeacherPanel, "name_211500318189700");
+		
+		JScrollPane scrollPane = new JScrollPane();
+		GroupLayout gl_TeacherPanel = new GroupLayout(TeacherPanel);
+		gl_TeacherPanel.setHorizontalGroup(
+			gl_TeacherPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_TeacherPanel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_TeacherPanel.setVerticalGroup(
+			gl_TeacherPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_TeacherPanel.createSequentialGroup()
+					.addGap(42)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 370, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(96, Short.MAX_VALUE))
+		);
+		
+		TeacherTable = new JTable();
+		TeacherTable.setDefaultEditor(Object.class, null);
+		TeacherTable.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"brook", "dead", "Undead", "CanI@see.com"},
+				{null, null, null, null},
+				{null, null, null, null},
+			},
+			new String[] {
+				"First Name", "Last Name", "Sex", "Email"
+			}
+		));
+		TeacherTable.getColumnModel().getColumn(3).setPreferredWidth(144);
+		TeacherTable.setFont(new Font("Arial", Font.ITALIC, 15));
+		scrollPane.setViewportView(TeacherTable);
+		TeacherPanel.setLayout(gl_TeacherPanel);
 		splitPane_1.setDividerLocation(50);
 		
 		JPanel panel_1 = new JPanel();

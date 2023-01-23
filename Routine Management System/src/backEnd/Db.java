@@ -15,7 +15,9 @@ public class Db {
 			String sqlQuery = "SELECT * FROM `student_info`";
 			ResultSet resultset = createStatement.executeQuery(sqlQuery);
 			resultset.next();
+			for(int i=0;i<2;i++) {
 			System.out.println(resultset.getString("email"));
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

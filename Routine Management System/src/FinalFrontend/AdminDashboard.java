@@ -7,6 +7,8 @@ import javax.swing.JSplitPane;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import java.awt.CardLayout;
+
+import javax.swing.AbstractButton;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
@@ -15,6 +17,7 @@ import javax.swing.JDialog;
 
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
@@ -22,11 +25,16 @@ import javax.swing.UIManager;
 import java.awt.Color;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 
 
@@ -47,6 +55,30 @@ public class AdminDashboard {
 	private JButton btnResult;
 	private JTable TeacherTable;
 	private JTable stdTable;
+	
+	
+	private DefaultTableModel Teachermodel = new DefaultTableModel(
+						new Object[][] {
+						{"Luffy", "Monkey D.", "9856522012", "Egghead,New World"},
+						{"Tony tony", "Chopper", "9855562310", "Egghead,New World"},
+						{null, null, null, null},
+						{null, null, null, null},
+						{null, null, null, null},
+					},
+					new String[] {
+						"First Name", "Last Name", "PhoneNumber", "Address"
+					}
+				);
+	private JTable CourseTable;
+	private DefaultTableModel coursemodel = new DefaultTableModel(
+			new Object[][] {
+		{"Bit", "3"},
+		{"BIBM", "3"},
+	},
+	new String[] {
+		"Course name", "Course Year"
+	}
+);
 
 	/**
 	 * Launch the application.
@@ -152,15 +184,16 @@ private void activeBtn(int R,int G,int B,String a) {
 		btnLogout.setBackground(SystemColor.activeCaption);
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+					Object[] options= {"Yes","No"};
+				int optionSelected=JOptionPane.showOptionDialog(null, "Are you sure you want to logout?", "Confirm Logout",
+						JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,options,options[0]);
+				System.out.println(optionSelected);
+				if(optionSelected==0) {
 				Login window = new Login();
 			window.getFrame().setVisible(true);
 			frame.dispose();
-//				ConfirmLogout dialog = new ConfirmLogout();
-//				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-//				dialog.setVisible(true);
-//				dialog.setFrame(frame);
-			}
-		});
+				}
+		}});
 		btnLogout.setFont(new Font("Arial", Font.ITALIC, 17));
 		
 		JLabel lblAdminPhoto = new JLabel("");
@@ -225,51 +258,180 @@ private void activeBtn(int R,int G,int B,String a) {
 		JPanel CoursePanel = new JPanel();
 		CoursePanel.setBackground(Color.GRAY);
 		panel_right.add(CoursePanel, "name_29674605431600");
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
 		GroupLayout gl_CoursePanel = new GroupLayout(CoursePanel);
 		gl_CoursePanel.setHorizontalGroup(
 			gl_CoursePanel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 623, Short.MAX_VALUE)
+				.addGroup(gl_CoursePanel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
+					.addGap(20))
 		);
 		gl_CoursePanel.setVerticalGroup(
 			gl_CoursePanel.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 559, Short.MAX_VALUE)
+				.addGroup(Alignment.TRAILING, gl_CoursePanel.createSequentialGroup()
+					.addContainerGap(77, Short.MAX_VALUE)
+					.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 393, GroupLayout.PREFERRED_SIZE)
+					.addGap(89))
 		);
+		
+		CourseTable = new JTable();
+		CourseTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Object[] options= {"Update","Delete"};
+				int selecterOption=JOptionPane.showOptionDialog(null, "Do you want to update or delete?", "Update or delete Course",
+						JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
+				if(selecterOption==0) {
+				CourseInfo dialog = new CourseInfo((String) CourseTable.getValueAt(CourseTable.getSelectedRow(), 0));
+				dialog.setVisible(true);
+				for(int i =0;i<CourseTable.getColumnCount();i++) {
+					String info = (String) CourseTable.getValueAt(CourseTable.getSelectedRow(), i);
+					System.out.println(info);
+					if(dialog.getDisplayCourseName().getText().isEmpty()) {
+						dialog.getDisplayCourseName().setText(info);
+					}else if(dialog.getDisplayYear().getText().isEmpty()) {
+						dialog.getDisplayYear().setText(info);
+					}
+				}
+			}else if(selecterOption==1) {
+				Object[] confirm= {"Yes","No"};
+				int confirmOption=JOptionPane.showOptionDialog(null, "Are you sure u want to delete?", "Confirm",
+						JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,confirm,confirm[0]);
+				if(confirmOption==0) {
+					coursemodel.removeRow(CourseTable.getSelectedRow());
+				}
+			}
+				}
+		});
+		CourseTable.setDefaultEditor(Object.class, null);
+		CourseTable.setFont(new Font("Arial", Font.ITALIC, 15));
+		CourseTable.setModel(coursemodel);
+		CourseTable.getColumnModel().getColumn(0).setPreferredWidth(85);
+		scrollPane_1.setViewportView(CourseTable);
 		CoursePanel.setLayout(gl_CoursePanel);
 		
 		JPanel TeacherPanel = new JPanel();
+		TeacherPanel.setForeground(Color.GRAY);
 		TeacherPanel.setBackground(Color.GRAY);
 		panel_right.add(TeacherPanel, "name_29678438199200");
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setForeground(Color.GRAY);
+		scrollPane.setBackground(Color.GRAY);
+		
+		JButton btnAddTutor = new JButton("Add Tutor");
+		btnAddTutor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddTeacherForm form = new AddTeacherForm();
+				form.setVisible(true);
+				JButton btnSubmit = form.getBtnSubmit();
+				btnSubmit.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						System.out.println("clicked");
+						Object[] informations = {form.getFirstNametextField().getText(),form.getLastNametextField().getText(),form.getNumbertextField().getText(),form.getAddresstextField().getText()};
+						for(int i=0;i<4;i++) {
+							System.out.println(informations[i]);
+						}
+						Teachermodel.addRow(informations);
+					}
+				});
+			}
+		});
+				
+		btnAddTutor.setFont(new Font("Arial", Font.ITALIC, 17));
+		btnAddTutor.setBorder(new MatteBorder(0, 0, 0, 0, (Color) new Color(0, 0, 0)));
+		btnAddTutor.setBackground(SystemColor.activeCaption);
 		GroupLayout gl_TeacherPanel = new GroupLayout(TeacherPanel);
 		gl_TeacherPanel.setHorizontalGroup(
 			gl_TeacherPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_TeacherPanel.createSequentialGroup()
-					.addGap(10)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 593, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_TeacherPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_TeacherPanel.createSequentialGroup()
+							.addGap(10)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 593, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_TeacherPanel.createSequentialGroup()
+							.addGap(191)
+							.addComponent(btnAddTutor, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(20, Short.MAX_VALUE))
 		);
 		gl_TeacherPanel.setVerticalGroup(
 			gl_TeacherPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_TeacherPanel.createSequentialGroup()
 					.addGap(61)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 383, GroupLayout.PREFERRED_SIZE))
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 383, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnAddTutor, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(63, Short.MAX_VALUE))
 		);
-		
 		TeacherTable = new JTable();
+		TeacherTable.setBackground(Color.WHITE);
+		TeacherTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Object[] options= {"Update","Delete"};
+				int selecterOption=JOptionPane.showOptionDialog(null, "Do you want to update or delete?", "Update or delete teacher",
+						JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
+				if(selecterOption==0) {
+					ArrayList<Object> informations = new ArrayList<>();
+					int selectedRow = TeacherTable.getSelectedRow();
+					// Opening the form we made
+					AddTeacherForm form = new AddTeacherForm();
+					form.setVisible(true);
+					//getting the button of the form
+					JButton btnSubmit = form.getBtnSubmit();
+					btnSubmit.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							System.out.println("clicked");
+							for(int i=0;i<TeacherTable.getColumnCount();i++) {
+								String info = ((JTextField) informations.get(i)).getText();
+//								System.out.println(info);
+								TeacherTable.setValueAt(info, selectedRow, i);
+//								DefaultTableModel.addRow(options);
+						}
+						}});
+					for(int i=0;i<TeacherTable.getColumnCount();i++) {
+						String info = (String) TeacherTable.getValueAt(selectedRow, i);
+						
+						if(form.getFirstNametextField().getText().isEmpty()) {
+							
+							form.getFirstNametextField().setText(info);
+							informations.add(form.getFirstNametextField());
+							
+						}else if(form.getLastNametextField().getText().isEmpty()) {
+							
+							form.getLastNametextField().setText(info);
+							informations.add(form.getLastNametextField());
+							
+						}else if(form.getNumbertextField().getText().isEmpty()) {
+							
+							form.getNumbertextField().setText(info);
+							informations.add(form.getNumbertextField());
+							
+						}else {
+							
+							form.getAddresstextField().setText(info);
+							informations.add(form.getAddresstextField());
+							
+						}
+					}
+					
+				}else if (selecterOption==1) {
+					Object[] comfirm= {"Yes","No"};
+					int confirm=JOptionPane.showOptionDialog(null, "Are you sure you want to delete?", "Confirm",
+							JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,comfirm,comfirm[0]);
+					if(confirm ==0) {
+					Teachermodel.removeRow(TeacherTable.getSelectedRow());
+					}
+				}
+			}
+		});
 		TeacherTable.setDefaultEditor(Object.class, null);
 		TeacherTable.setFont(new Font("Arial", Font.ITALIC, 15));
-		TeacherTable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Luffy", "Monkey D.", "9856522012", "Egghead,New World"},
-				{"Tony tony", "Chopper", "9855562310", "Egghead,New World"},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-			},
-			new String[] {
-				"First Name", "Last Name", "PhoneNumber", "Address"
-			}
-		));
+		TeacherTable.setModel(Teachermodel);
 		TeacherTable.getColumnModel().getColumn(2).setPreferredWidth(95);
 		TeacherTable.getColumnModel().getColumn(3).setPreferredWidth(124);
 		scrollPane.setViewportView(TeacherTable);
@@ -318,6 +480,4 @@ private void activeBtn(int R,int G,int B,String a) {
 		panel_right.add(ResultPanel, "name_173602901088000");
 		SplitPane.setDividerLocation(160);
 	}
-	
-	
 }

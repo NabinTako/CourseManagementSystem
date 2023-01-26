@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import java.awt.Color;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -139,11 +140,16 @@ public class studentDashboard {
 		btnLogout.setFont(new Font("Arial", Font.ITALIC, 15));
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login window = new Login();
-				window.getFrame().setVisible(true);
-				frame.dispose();
+				Object[] options= {"Yes","No"};
+				int optionSelected=JOptionPane.showOptionDialog(null, "Are you sure you want to logout?", "Confirm Logout",
+						JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,options,options[0]);
+				System.out.println(optionSelected);
+				if(optionSelected==0) {
+					Login window = new Login();
+					window.getFrame().setVisible(true);
+					frame.dispose();
 			}
-		});
+			}});
 		
 		btnTeacher = new JButton("Instructors");
 		btnTeacher.addActionListener(new ActionListener() {
@@ -392,9 +398,6 @@ public class studentDashboard {
 		PeopleView2.setBackground(new Color(204, 204, 204));
 		Model_panel2.add(PeopleView2, "name_19093441402800");
 		Concurancy.setDividerLocation(30);
-		
-		JPanel InstructorPlane = new JPanel();
-		panel.add(InstructorPlane, "name_116840171274100");
 		
 		JPanel TeacherPanel = new JPanel();
 		panel.add(TeacherPanel, "name_211500318189700");

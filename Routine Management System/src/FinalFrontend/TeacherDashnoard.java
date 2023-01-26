@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
@@ -140,9 +141,15 @@ public class TeacherDashnoard {
 		btnLogout.setFont(new Font("Arial", Font.ITALIC, 15));
 		btnLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login window = new Login();
-				window.getFrame().setVisible(true);
-				frmTeacher.dispose();
+				Object[] options= {"Yes","No"};
+				int optionSelected=JOptionPane.showOptionDialog(null, "Are you sure you want to logout?", "Confirm Logout",
+						JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,options,options[0]);
+				System.out.println(optionSelected);
+				if(optionSelected==0) {
+					Login window = new Login();
+					window.getFrame().setVisible(true);
+					frmTeacher.dispose();
+				}
 			}
 		});
 		btnLogout.setFont(new Font("Arial", Font.ITALIC, 15));

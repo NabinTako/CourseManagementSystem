@@ -33,7 +33,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import FinalBackend.DeleteInformations;
 import FinalBackend.Teacher_info;
+import FinalBackend.UpdateTableInformation;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -66,11 +68,10 @@ public class AdminDashboard {
 	
 	private DefaultTableModel Teachermodel = new DefaultTableModel(
 						new Object[][] {
-						{"","Luffy", "Monkey D.", "9856522012", "Egghead,New World"},
-						{"","Tony tony", "Chopper", "9855562310", "Egghead,New World"},
 					},
 					new String[] {
-						"id","First Name", "Last Name", "PhoneNumber", "Address"
+						"id","First Name", "Last Name", "PhoneNumber", "Address","Type"
+						
 					}
 				);
 	private JTable CourseTable;
@@ -334,8 +335,12 @@ private void activeBtn(int R,int G,int B,String a) {
 				btnSubmit.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
-						System.out.println("clicked");
-						Object[] informations = {form.getFirstNametextField().getText(),form.getLastNametextField().getText(),form.getNumbertextField().getText(),form.getAddresstextField().getText()};
+//						System.out.println("clicked");
+						Object[] informations = {form.getLblshowID().getText(),form.getFirstNametextField().getText(),form.getLastNametextField().getText(),form.getNumbertextField().getText(),
+								form.getAddresstextField().getText(),form.getTypetextField().getText()};
+						new UpdateTableInformation(form.getUsername().getText().trim(),form.getPassword().getText().trim(),form.getFirstNametextField().getText().trim(),form.getLastNametextField().getText().trim(),
+								form.getAddresstextField().getText().trim(),form.getNumbertextField().getText().trim(),form.getTypetextField().getText().trim());
+					
 //						for(int i=0;i<4;i++) {
 //							System.out.println(informations[i]);
 //						}
@@ -377,6 +382,7 @@ private void activeBtn(int R,int G,int B,String a) {
 		TeacherTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				System.out.println(TeacherTable.getSelectedRow());
 				Object[] options= {"Update","Delete"};
 				int selecterOption=JOptionPane.showOptionDialog(null, "Do you want to update or delete?", "Update or delete teacher",
 						JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
@@ -392,44 +398,58 @@ private void activeBtn(int R,int G,int B,String a) {
 						@Override
 						public void mouseClicked(MouseEvent e) {
 //							System.out.println("clicked");
+							new UpdateTableInformation(form.getLblshowID().getText().trim(),form.getFirstNametextField().getText().trim(),form.getLastNametextField().getText().trim(),
+									form.getAddresstextField().getText().trim(),form.getNumbertextField().getText().trim(),form.getTypetextField().getText().trim());
 							for(int i=1;i<TeacherTable.getColumnCount();i++) {
 								String info = ((JTextField) informations.get(i)).getText();
 								TeacherTable.setValueAt(info, selectedRow, i);
+								//String Id,String Firstname, String Lastname, String Address,String Phonenumber,String type
+//								UPDATE `teacher_info` SET `userName` = 'brook' WHERE `teacher_info`.`id` = 1;
+								form.dispose();
 								
 						}
 						}});
-					for(int i=1;i<TeacherTable.getColumnCount();i++) {
-						String info = (String) TeacherTable.getValueAt(selectedRow, i);
-						
-						if(form.getFirstNametextField().getText().isEmpty()) {
-							
-							form.getFirstNametextField().setText(info);
+
+						form.getLblshowID().setText(teacher_information.getId(selectedRow));
+						informations.add(form.getLblshowID());
+//					for(int i=1;i<TeacherTable.getColumnCount();i++) {
+//						String info = (String) TeacherTable.getValueAt(selectedRow, i);
+//						
+//						if(form.getFirstNametextField().getText().isEmpty()) {
+//							
+							form.getFirstNametextField().setText(teacher_information.getfirstName(selectedRow));
 							informations.add(form.getFirstNametextField());
+//							
+//						}else if(form.getLastNametextField().getText().isEmpty()) {
 							
-						}else if(form.getLastNametextField().getText().isEmpty()) {
-							
-							form.getLastNametextField().setText(info);
+							form.getLastNametextField().setText(teacher_information.getlastName(selectedRow));
 							informations.add(form.getLastNametextField());
-							
-						}else if(form.getNumbertextField().getText().isEmpty()) {
-							
-							form.getNumbertextField().setText(info);
+//							
+//						}else if(form.getNumbertextField().getText().isEmpty()) {
+//							
+							form.getNumbertextField().setText(teacher_information.getPhoneNumber(selectedRow));
 							informations.add(form.getNumbertextField());
-							
-						}else {
-							
-							form.getAddresstextField().setText(info);
+//							
+//						}else {
+//							
+							form.getAddresstextField().setText(teacher_information.getAddress(selectedRow));
 							informations.add(form.getAddresstextField());
 							
-						}
-					}
+							form.getTypetextField().setText(teacher_information.getType(selectedRow));
+							informations.add(form.getTypetextField());
+//							
+//						}
+//					}
 					
 				}else if (selecterOption==1) {
 					Object[] comfirm= {"Yes","No"};
 					int confirm=JOptionPane.showOptionDialog(null, "Are you sure you want to delete?", "Confirm",
 							JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,comfirm,comfirm[0]);
 					if(confirm ==0) {
+//						System.out.println(TeacherTable.getSelectedRow());
+						String phoneNumber = teacher_information.getPhoneNumber(TeacherTable.getSelectedRow());
 					Teachermodel.removeRow(TeacherTable.getSelectedRow());
+					new DeleteInformations(phoneNumber);
 					}
 				}
 			}
@@ -492,7 +512,7 @@ private void activeBtn(int R,int G,int B,String a) {
 		teacher_information=new Teacher_info();
 		int size=teacher_information.getSize();
 		for(int i=0;i<size;i++) {
-		Object[] name = {teacher_information.getId(i),teacher_information.getfirstName(i),teacher_information.getlastName(i),teacher_information.getPhoneNumber(i),teacher_information.agetAddress(i)};
+		Object[] name = {teacher_information.getId(i),teacher_information.getfirstName(i),teacher_information.getlastName(i),teacher_information.getPhoneNumber(i),teacher_information.getAddress(i),teacher_information.getType(i)};
 		Teachermodel.addRow(name);
 		}
 		

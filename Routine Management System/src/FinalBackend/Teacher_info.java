@@ -20,7 +20,6 @@ public class Teacher_info {
 	List<String> phoneNumber = new ArrayList<>();
 	List<String> Type = new ArrayList<>();
 
-//	UPDATE `teacher_info` SET `userName` = 'brook' WHERE `teacher_info`.`id` = 1;
 	
 	public int getSize() {
 		return firstName.size();
@@ -45,7 +44,7 @@ public class Teacher_info {
 	public String getlastName(int i) {
 		return lastName.get(i);
 	}
-	public String agetAddress(int i) {
+	public String getAddress(int i) {
 		return Address.get(i);
 	}
 
@@ -77,9 +76,9 @@ public class Teacher_info {
 					System.err.println(resultset.getString("userName"));
 					System.err.println(resultset.getString("passWord"));
 				}
-//				for(int i=0;i<2;i++) { 
+//				for(int i=0;i<3;i++) { 
 //					System.out.println(userName.get(i));
-//					System.out.println(passWord.get(i));
+//					System.out.println(phoneNumber.get(i));
 //				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

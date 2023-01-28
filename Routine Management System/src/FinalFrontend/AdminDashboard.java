@@ -32,6 +32,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import FinalBackend.Teacher_info;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -41,6 +44,10 @@ import java.util.ArrayList;
 public class AdminDashboard {
 	
 	//associations 
+	
+	Teacher_info teacher_information;
+	
+	// >>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 	private JFrame frame;
 	public JFrame getFrame() {
@@ -59,14 +66,11 @@ public class AdminDashboard {
 	
 	private DefaultTableModel Teachermodel = new DefaultTableModel(
 						new Object[][] {
-						{"Luffy", "Monkey D.", "9856522012", "Egghead,New World"},
-						{"Tony tony", "Chopper", "9855562310", "Egghead,New World"},
-						{null, null, null, null},
-						{null, null, null, null},
-						{null, null, null, null},
+						{"","Luffy", "Monkey D.", "9856522012", "Egghead,New World"},
+						{"","Tony tony", "Chopper", "9855562310", "Egghead,New World"},
 					},
 					new String[] {
-						"First Name", "Last Name", "PhoneNumber", "Address"
+						"id","First Name", "Last Name", "PhoneNumber", "Address"
 					}
 				);
 	private JTable CourseTable;
@@ -158,6 +162,7 @@ private void activeBtn(int R,int G,int B,String a) {
 		btnTeacher.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				layout.show(panel_right,"name_29678438199200");
+				 teacher_information = new Teacher_info();
 				activeBtn(255, 235, 205,"TeacherBtn");
 				
 			}
@@ -187,7 +192,6 @@ private void activeBtn(int R,int G,int B,String a) {
 					Object[] options= {"Yes","No"};
 				int optionSelected=JOptionPane.showOptionDialog(null, "Are you sure you want to logout?", "Confirm Logout",
 						JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,options,options[0]);
-				System.out.println(optionSelected);
 				if(optionSelected==0) {
 				Login window = new Login();
 			window.getFrame().setVisible(true);
@@ -332,10 +336,12 @@ private void activeBtn(int R,int G,int B,String a) {
 					public void mouseClicked(MouseEvent e) {
 						System.out.println("clicked");
 						Object[] informations = {form.getFirstNametextField().getText(),form.getLastNametextField().getText(),form.getNumbertextField().getText(),form.getAddresstextField().getText()};
-						for(int i=0;i<4;i++) {
-							System.out.println(informations[i]);
-						}
+//						for(int i=0;i<4;i++) {
+//							System.out.println(informations[i]);
+//						}
 						Teachermodel.addRow(informations);
+						
+						form.dispose();
 					}
 				});
 			}
@@ -385,15 +391,14 @@ private void activeBtn(int R,int G,int B,String a) {
 					btnSubmit.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
-							System.out.println("clicked");
-							for(int i=0;i<TeacherTable.getColumnCount();i++) {
+//							System.out.println("clicked");
+							for(int i=1;i<TeacherTable.getColumnCount();i++) {
 								String info = ((JTextField) informations.get(i)).getText();
-//								System.out.println(info);
 								TeacherTable.setValueAt(info, selectedRow, i);
-//								DefaultTableModel.addRow(options);
+								
 						}
 						}});
-					for(int i=0;i<TeacherTable.getColumnCount();i++) {
+					for(int i=1;i<TeacherTable.getColumnCount();i++) {
 						String info = (String) TeacherTable.getValueAt(selectedRow, i);
 						
 						if(form.getFirstNametextField().getText().isEmpty()) {
@@ -432,6 +437,7 @@ private void activeBtn(int R,int G,int B,String a) {
 		TeacherTable.setDefaultEditor(Object.class, null);
 		TeacherTable.setFont(new Font("Arial", Font.ITALIC, 15));
 		TeacherTable.setModel(Teachermodel);
+		displayTeachData();
 		TeacherTable.getColumnModel().getColumn(2).setPreferredWidth(95);
 		TeacherTable.getColumnModel().getColumn(3).setPreferredWidth(124);
 		scrollPane.setViewportView(TeacherTable);
@@ -479,5 +485,17 @@ private void activeBtn(int R,int G,int B,String a) {
 		JPanel ResultPanel = new JPanel();
 		panel_right.add(ResultPanel, "name_173602901088000");
 		SplitPane.setDividerLocation(160);
+	}
+	
+	// function to display teacher data in jtable
+	public <E> void displayTeachData() {
+		teacher_information=new Teacher_info();
+		int size=teacher_information.getSize();
+		for(int i=0;i<size;i++) {
+		Object[] name = {teacher_information.getId(i),teacher_information.getfirstName(i),teacher_information.getlastName(i),teacher_information.getPhoneNumber(i),teacher_information.agetAddress(i)};
+		Teachermodel.addRow(name);
+		}
+		
+		
 	}
 }

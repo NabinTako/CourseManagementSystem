@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class admin_info {
-
+	private int dataNum;
 	List<String> userName = new ArrayList<>();
 	List<String> passWord = new ArrayList<>();
 
@@ -22,28 +22,25 @@ public class admin_info {
 		return passWord.get(i);
 	}
 	
+	public int getDtaNumber() {
+		return dataNum;
+	}
+	
 
 	public admin_info() {
 			try {
-				String[] columnNames= {"userName","passWord"};
-				Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/login_data", "root", "");
+				Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
 				Statement createStatement = connection.createStatement();
 				String sqlQuery = "SELECT * FROM `admin_info`";
 				ResultSet resultset = createStatement.executeQuery(sqlQuery);
-				for(int j=0;j<2;j++) {
-					resultset.next();
-				for(int i=0;i<2;i++) {
-					if(i%2==0) {
-					userName.add(resultset.getString(columnNames[i]));
-					}else {
-					passWord.add(resultset.getString(columnNames[i]));
-					}
+				while(resultset.next()) {
+					userName.add(resultset.getString("userName"));
+					passWord.add(resultset.getString("passWord"));
+					dataNum++;
+					System.err.println(resultset.getString("userName"));
+					System.err.println(resultset.getString("passWord"));
 				}
-				}
-//				for(int i=0;i<2;i++) { 
-//					System.out.println(userName.get(i));
-//					System.out.println(passWord.get(i));
-//				}
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -55,8 +52,4 @@ public class admin_info {
 		new admin_info();
 	}
 	
-	public void a() {
-		
-	}
-
 }

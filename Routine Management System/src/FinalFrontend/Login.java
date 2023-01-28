@@ -160,7 +160,7 @@ public class Login {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					for(int i=0;i<2;i++) {
+					for(int i=0;i<adminInfo.getDtaNumber();i++) {
 						
 					if(valueFromComboBox.equals("Student")) {	
 				if(userNameTextField.getText().equals("std") && Arrays.equals(passwordField.getPassword(),new char[] {'s','t','d'}) && valueFromComboBox.equals("Student")) {

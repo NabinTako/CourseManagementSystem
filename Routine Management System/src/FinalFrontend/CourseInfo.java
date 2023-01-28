@@ -17,17 +17,23 @@ import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import FinalBackend.course_info;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CourseInfo extends JDialog {
 	private JTable ModulesTable;
+	
 	DefaultTableModel model = new DefaultTableModel(
 			new Object[][] {
 				{null, null},
 			},
 			new String[] {
-				"Name", "Module Number"
+				"Name", "Module Number","level","semester","credit","type"
 			}
 		);
 	private JLabel DisplayCourseName;
@@ -46,7 +52,7 @@ public class CourseInfo extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			CourseInfo dialog = new CourseInfo("BIT");
+			CourseInfo dialog = new CourseInfo("bit");
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -59,7 +65,25 @@ public class CourseInfo extends JDialog {
 	 */
 	public CourseInfo(String CourseName) {
 		setTitle(CourseName);
+		List<Object> Modulename = new ArrayList<>();
+		List<Object> Modulenumber = new ArrayList<>();
+		List<Object> level = new ArrayList<>();
+		List<Object> semester = new ArrayList<>();
+		List<Object> credit = new ArrayList<>();
+		List<Object> type = new ArrayList<>();
+		course_info informations=new course_info(CourseName);
 		setBounds(100, 100, 800, 600);
+//		int i;
+		for(int i=0;i<informations.getModule().size();i++) {
+			Modulename.add(informations.getModule(i));
+			Modulenumber.add(informations.getModuleNumber(i));
+			level.add(informations.getLevel(i));
+			semester.add(informations.getSemester(i));
+			credit.add(informations.GetCredit(i));
+			type.add(informations.getType(i));
+			Object[] show = {Modulename.get(i),Modulenumber.get(i),level.get(i),semester.get(i),credit.get(i),type.get(i)};
+			model.addRow(show);
+		}
 		
 		JLabel lblCourseName = new JLabel("Name");
 		lblCourseName.setFont(new Font("Arial", Font.ITALIC, 20));
@@ -74,6 +98,9 @@ public class CourseInfo extends JDialog {
 		
 		DisplayYear = new JLabel("");
 		DisplayYear.setFont(new Font("Arial", Font.ITALIC, 20));
+		
+		JButton btnNewButton = new JButton("Add Module");
+		btnNewButton.setFont(new Font("Arial", Font.ITALIC, 20));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -91,9 +118,12 @@ public class CourseInfo extends JDialog {
 									.addGap(44)
 									.addComponent(DisplayCourseName, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(35)
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 711, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(38, Short.MAX_VALUE))
+							.addGap(308)
+							.addComponent(btnNewButton))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -108,10 +138,13 @@ public class CourseInfo extends JDialog {
 						.addComponent(DisplayYear, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 359, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(49, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(btnNewButton)
+					.addContainerGap())
 		);
 		
 		ModulesTable = new JTable();
+		ModulesTable.setFont(new Font("Arial", Font.ITALIC, 15));
 		ModulesTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -125,6 +158,10 @@ public class CourseInfo extends JDialog {
 		});
 		ModulesTable.setDefaultEditor(Object.class, null);
 		ModulesTable.setModel(model);
+		
+//		Object[] informations = {DisplayCourseName.getText(),DisplayYear.getText()};
+//		model.addRow(informations);
+//		
 		ModulesTable.getColumnModel().getColumn(1).setPreferredWidth(113);
 		scrollPane.setViewportView(ModulesTable);
 		getContentPane().setLayout(groupLayout);

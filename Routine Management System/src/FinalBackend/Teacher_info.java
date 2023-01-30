@@ -15,10 +15,12 @@ public class Teacher_info {
 	List<String> userName = new ArrayList<>();
 	List<String> passWord = new ArrayList<>();
 	List<String> firstName = new ArrayList<>();
+	List<String> Sex = new ArrayList<>();
 	List<String> lastName = new ArrayList<>();
 	List<String> Address = new ArrayList<>();
 	List<String> phoneNumber = new ArrayList<>();
 	List<String> Type = new ArrayList<>();
+	List<String> ModuleAssigned = new ArrayList<>();
 
 	
 	public int getSize() {
@@ -44,6 +46,9 @@ public class Teacher_info {
 	public String getlastName(int i) {
 		return lastName.get(i);
 	}
+	public String getSex(int i) {
+		return Sex.get(i);
+	}
 	public String getAddress(int i) {
 		return Address.get(i);
 	}
@@ -53,6 +58,9 @@ public class Teacher_info {
 	}
 	public String getPhoneNumber(int i) {
 		return phoneNumber.get(i);
+	}
+	public String getModuleAssigned(int i) {
+		return ModuleAssigned.get(i);
 	}
 	
 
@@ -69,9 +77,11 @@ public class Teacher_info {
 					passWord.add(resultset.getString("passWord"));
 					firstName.add(resultset.getString("First name"));
 					lastName.add(resultset.getString("Last name"));
+					Sex.add(resultset.getString("Sex"));
 					Address.add(resultset.getString("Address"));
 					phoneNumber.add(resultset.getString("phoneNumber"));
 					Type.add(resultset.getString("type"));
+					ModuleAssigned.add(resultset.getString("Module"));
 					dataNum++;
 					System.err.println(resultset.getString("userName"));
 					System.err.println(resultset.getString("passWord"));

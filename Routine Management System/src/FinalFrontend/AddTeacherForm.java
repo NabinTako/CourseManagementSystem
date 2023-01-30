@@ -8,11 +8,19 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
+import java.awt.Image;
+import java.util.Enumeration;
+import java.awt.Color;
+import javax.swing.JCheckBox;
+import javax.swing.JRadioButton;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 
 public class AddTeacherForm extends JDialog {
 	
@@ -20,12 +28,27 @@ public class AddTeacherForm extends JDialog {
 	private JTextField lastNametextField;
 	private JTextField AddresstextField;
 	private JTextField NumbertextField;
-	private JTextField TypetextField;
 	private JButton btnSubmit;
 	private JLabel lblshowID;
 	private JLabel lblType;
 	private JTextField userNametextField;
 	private JTextField passWordtextField;
+	private JTextField ModuleAssignedtextField;
+	private JCheckBox isPartTimeCheckBox;
+	
+	
+	
+	public JCheckBox getIsPartTimeCheckBox() {
+		return isPartTimeCheckBox;
+	}
+
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	
+	
+	public ButtonGroup getButtonGroup() {
+		return buttonGroup;
+	}
+
 	
 	
 	
@@ -53,17 +76,15 @@ public class AddTeacherForm extends JDialog {
 	public JTextField getNumbertextField() {
 		return NumbertextField;
 	}
-	
-	public JTextField getTypetextField() {
-		return TypetextField;
-	}
-	
-	public JTextField getUsername() {
+	public JTextField getUsernametextField() {
 		return userNametextField;
 	}
 
-	public JTextField getPassword() {
+	public JTextField getPasswordtextField() {
 		return passWordtextField;
+	}
+	public JTextField getModuleAssignedtextField() {
+		return ModuleAssignedtextField;
 	}
 
 	/**
@@ -83,8 +104,9 @@ public class AddTeacherForm extends JDialog {
 	 * Create the dialog.
 	 */
 	public AddTeacherForm() {
+		getContentPane().setBackground(Color.LIGHT_GRAY);
 		setTitle("Teacher Form");
-		setBounds(100, 100, 552, 603);
+		setBounds(100, 100, 693, 691);
 		
 		JLabel lblFirstName = new JLabel("First Name");
 		lblFirstName.setFont(new Font("Arial", Font.ITALIC, 20));
@@ -126,10 +148,6 @@ public class AddTeacherForm extends JDialog {
 		lblType = new JLabel("Type");
 		lblType.setFont(new Font("Arial", Font.ITALIC, 20));
 		
-		TypetextField = new JTextField();
-		TypetextField.setFont(new Font("Arial", Font.ITALIC, 20));
-		TypetextField.setColumns(10);
-		
 		JLabel lblUsername = new JLabel("UserName");
 		lblUsername.setFont(new Font("Arial", Font.ITALIC, 20));
 		
@@ -143,91 +161,189 @@ public class AddTeacherForm extends JDialog {
 		passWordtextField = new JTextField();
 		passWordtextField.setFont(new Font("Arial", Font.ITALIC, 20));
 		passWordtextField.setColumns(10);
+		
+		JLabel lblModuleAssigned = new JLabel("Module Assigned");
+		lblModuleAssigned.setFont(new Font("Arial", Font.ITALIC, 20));
+		
+		ModuleAssignedtextField = new JTextField();
+		ModuleAssignedtextField.setFont(new Font("Arial", Font.ITALIC, 20));
+		ModuleAssignedtextField.setColumns(10);
+		
+		isPartTimeCheckBox = new JCheckBox("is part_time");
+		isPartTimeCheckBox.setBackground(Color.LIGHT_GRAY);
+		isPartTimeCheckBox.setFont(new Font("Arial", Font.ITALIC, 20));
+		
+		JLabel lblSex = new JLabel("Sex");
+		lblSex.setFont(new Font("Arial", Font.ITALIC, 20));
+		
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("Male");
+		rdbtnNewRadioButton.setBackground(Color.LIGHT_GRAY);
+		buttonGroup.add(rdbtnNewRadioButton);
+		rdbtnNewRadioButton.setFont(new Font("Arial", Font.ITALIC, 20));
+		
+		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Female");
+		rdbtnNewRadioButton_1.setBackground(Color.LIGHT_GRAY);
+		buttonGroup.add(rdbtnNewRadioButton_1);
+		
+		rdbtnNewRadioButton_1.setFont(new Font("Arial", Font.ITALIC, 20));
+		
+		JLabel MaleLogo = new JLabel("");
+		ImageIcon logo = new ImageIcon(new ImageIcon(studentDashboard.class.getResource("/images/maleImg.png")).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+		MaleLogo.setIcon(logo);
+		MaleLogo.setFont(new Font("Arial", Font.ITALIC, 20));
+		
+		JLabel FemaleLogo = new JLabel("");
+		ImageIcon Femaleimg = new ImageIcon(new ImageIcon(studentDashboard.class.getResource("/images/female.png")).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+		FemaleLogo.setIcon(Femaleimg);
+		FemaleLogo.setFont(new Font("Arial", Font.ITALIC, 20));
+		
+		JLabel PartTimeLogo = new JLabel("");
+		ImageIcon parttimelogo = new ImageIcon(new ImageIcon(studentDashboard.class.getResource("/images/partTime.png")).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+		PartTimeLogo.setIcon(parttimelogo);
+		PartTimeLogo.setFont(new Font("Arial", Font.ITALIC, 20));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(51)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblType, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblPassword, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblUsername, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE))
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(TypetextField, GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE))
-								.addComponent(userNametextField, GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-								.addComponent(passWordtextField, GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-								.addComponent(btnSubmit)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(51)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblFirstName)
-										.addComponent(lblLastName, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblAddress, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblPhoneNumber, GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
-									.addPreferredGap(ComponentPlacement.RELATED))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(76)
-									.addComponent(lblId)
-									.addGap(112)))
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lastNametextField, GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
-								.addComponent(FirstNametextField, GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
-								.addComponent(NumbertextField, GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
-								.addComponent(AddresstextField, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 317, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblshowID, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap(47, Short.MAX_VALUE)
-							.addComponent(lblId)
-							.addGap(37))
+							.addGap(67)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(25)
+									.addComponent(lblId)
+									.addGap(149)
+									.addComponent(lblshowID, GroupLayout.PREFERRED_SIZE, 208, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(lblFirstName)
+									.addGap(95)
+									.addComponent(FirstNametextField, GroupLayout.PREFERRED_SIZE, 317, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+											.addComponent(lblPhoneNumber, GroupLayout.PREFERRED_SIZE, 187, GroupLayout.PREFERRED_SIZE)
+											.addComponent(lblPassword, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE)
+											.addComponent(lblModuleAssigned, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
+											.addComponent(lblType, GroupLayout.PREFERRED_SIZE, 154, GroupLayout.PREFERRED_SIZE)
+											.addComponent(lblUsername, GroupLayout.PREFERRED_SIZE, 98, GroupLayout.PREFERRED_SIZE))
+										.addGap(6)
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+											.addGroup(groupLayout.createSequentialGroup()
+												.addGap(10)
+												.addComponent(PartTimeLogo, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.UNRELATED)
+												.addComponent(isPartTimeCheckBox))
+											.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+												.addComponent(ModuleAssignedtextField, Alignment.LEADING)
+												.addComponent(passWordtextField, Alignment.LEADING)
+												.addComponent(userNametextField, Alignment.LEADING)
+												.addComponent(NumbertextField, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 317, GroupLayout.PREFERRED_SIZE))))
+									.addGroup(groupLayout.createSequentialGroup()
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+											.addComponent(lblLastName, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+											.addComponent(lblAddress, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+											.addComponent(lblSex, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE))
+										.addGap(79)
+										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+											.addGroup(groupLayout.createSequentialGroup()
+												.addGap(10)
+												.addComponent(MaleLogo, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(rdbtnNewRadioButton)
+												.addGap(28)
+												.addComponent(FemaleLogo)
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(rdbtnNewRadioButton_1))
+											.addComponent(AddresstextField, GroupLayout.PREFERRED_SIZE, 317, GroupLayout.PREFERRED_SIZE)
+											.addComponent(lastNametextField, GroupLayout.PREFERRED_SIZE, 317, GroupLayout.PREFERRED_SIZE))))))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(55)
-							.addComponent(lblshowID, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblFirstName)
-						.addComponent(FirstNametextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblLastName)
-						.addComponent(lastNametextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblAddress)
-						.addComponent(AddresstextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblPhoneNumber)
-						.addComponent(NumbertextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(30)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblType, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-						.addComponent(TypetextField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblUsername, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-						.addComponent(userNametextField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+							.addGap(251)
+							.addComponent(btnSubmit)))
+					.addContainerGap(100, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(23)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(4)
+									.addComponent(lblId))
+								.addComponent(lblshowID))
+							.addGap(37)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(3)
+									.addComponent(lblFirstName))
+								.addComponent(FirstNametextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(3)
+									.addComponent(lblLastName))
+								.addComponent(lastNametextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+									.addGroup(groupLayout.createSequentialGroup()
+										.addPreferredGap(ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
+											.addGroup(groupLayout.createSequentialGroup()
+												.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+													.addComponent(FemaleLogo)
+													.addComponent(MaleLogo, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
+												.addPreferredGap(ComponentPlacement.UNRELATED))
+											.addGroup(groupLayout.createSequentialGroup()
+												.addComponent(rdbtnNewRadioButton_1)
+												.addGap(19))))
+									.addGroup(groupLayout.createSequentialGroup()
+										.addPreferredGap(ComponentPlacement.RELATED)
+										.addComponent(rdbtnNewRadioButton)
+										.addGap(18)))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblSex, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(3)
+									.addComponent(lblAddress))
+								.addComponent(AddresstextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(3)
+									.addComponent(lblPhoneNumber))
+								.addComponent(NumbertextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addGap(36)
-							.addComponent(lblPassword, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(isPartTimeCheckBox)
+								.addComponent(lblType))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(userNametextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblUsername))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(21)
+									.addComponent(lblPassword))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(18)
+									.addComponent(passWordtextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(31)
+									.addComponent(lblModuleAssigned))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(25)
+									.addComponent(ModuleAssignedtextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(32)
-							.addComponent(passWordtextField, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
-					.addGap(57)
+							.addGap(314)
+							.addComponent(PartTimeLogo, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)))
+					.addGap(55)
 					.addComponent(btnSubmit)
-					.addGap(22))
+					.addGap(35))
 		);
 		getContentPane().setLayout(groupLayout);
 	}

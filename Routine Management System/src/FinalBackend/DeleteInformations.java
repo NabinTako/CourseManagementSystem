@@ -8,29 +8,56 @@ import javax.swing.JOptionPane;
 
 public class DeleteInformations {
 
+	Connection connection;
+	
+// to remove teacher information>>>>
 	public DeleteInformations(String mobileNumber) {
 
 		try {
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
 			Statement createStatement = connection.createStatement();
 			String sqlQuery = "DELETE FROM `teacher_info` WHERE `teacher_info`.`phoneNumber` = '"+mobileNumber+"'";
 			int updateSuccess = createStatement.executeUpdate(sqlQuery);
-			if(updateSuccess>=1) {
-				Object[] options= {"Ok"};
-				//9856352201
-				//int selecterOption=
-				JOptionPane.showOptionDialog(null, "Data updated!", "Success",
-						JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
-			}
-		
+			
+			check(updateSuccess);
 	}catch(Exception e) {
 
-		Object[] options= {"Ok"};
-		JOptionPane.showOptionDialog(null, "Something Went Wrong!!", "Failed",
-				JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,options,options[0]);
+		check(0);
 		
 	}
 
+	}
+	
+	// to remove student information>>
+	public DeleteInformations(String id,String mobileNumber) {
+
+		try {
+			 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			Statement createStatement = connection.createStatement();
+			String sqlQuery = "DELETE FROM `student_info` WHERE `student_info`.`Phone Number` = '"+mobileNumber+"'";
+			int updateSuccess = createStatement.executeUpdate(sqlQuery);
+			
+			check(updateSuccess);
+	}catch(Exception e) {
+
+		check(0);
+		
+	}
+
+	}
+	
+	private void check(int i){
+		if(i>=1) {
+			Object[] options= {"Ok"};
+			//9856352201
+			//int selecterOption=
+			JOptionPane.showOptionDialog(null, "Data updated!", "Success",
+					JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
+		}else {
+			Object[] options= {"Ok"};
+			JOptionPane.showOptionDialog(null, "Something Went Wrong!!", "Failed",
+					JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,options,options[0]);
+		}
 	}
 
 }

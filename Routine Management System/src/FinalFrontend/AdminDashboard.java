@@ -13,12 +13,15 @@ import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.List;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
@@ -34,12 +37,15 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import FinalBackend.DeleteInformations;
+import FinalBackend.Std_info;
 import FinalBackend.Teacher_info;
 import FinalBackend.UpdateTableInformation;
+import FinalBackend.courses_information;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 
 
@@ -48,6 +54,9 @@ public class AdminDashboard {
 	//associations 
 	
 	Teacher_info teacher_information;
+	courses_information course_information;
+	Std_info student_information;
+	AddStdForm stdForm;
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -65,20 +74,33 @@ public class AdminDashboard {
 	private JTable TeacherTable;
 	private JTable stdTable;
 	
+
+	private String Sex;
+	private String Type;
+	private String level;
+	
+	
+	private DefaultTableModel StdModal =new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"First Name", "Last Name", "Sex","PhoneNumber", "Address", "Level"
+			}
+		);
 	
 	private DefaultTableModel Teachermodel = new DefaultTableModel(
 						new Object[][] {
 					},
+						//column headers
 					new String[] {
-						"id","First Name", "Last Name", "PhoneNumber", "Address","Type"
+						"id","First Name", "Last Name", "Sex" ,"PhoneNumber", "Address","Type","Module Assigned"
 						
 					}
 				);
 	private JTable CourseTable;
 	private DefaultTableModel coursemodel = new DefaultTableModel(
 			new Object[][] {
-		{"Bit", "3"},
-		{"BIBM", "3"},
+		
 	},
 	new String[] {
 		"Course name", "Course Year"
@@ -163,7 +185,7 @@ private void activeBtn(int R,int G,int B,String a) {
 		btnTeacher.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				layout.show(panel_right,"name_29678438199200");
-				 teacher_information = new Teacher_info();
+//				 teacher_information = new Teacher_info();
 				activeBtn(255, 235, 205,"TeacherBtn");
 				
 			}
@@ -265,6 +287,26 @@ private void activeBtn(int R,int G,int B,String a) {
 		panel_right.add(CoursePanel, "name_29674605431600");
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
+		
+		JButton btnNewButton = new JButton("Add Course");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addCourse addCourse = new addCourse();
+				addCourse.setVisible(true);
+				JButton AddBtn = addCourse.getBtnAddCourse();
+				AddBtn.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String name=addCourse.getCourseNametextField().getText().trim();
+						String year=addCourse.getCourseDurationTextField().getText().trim();
+						new courses_information(name, year);
+						coursemodel.addRow(new Object[] {name, year});
+						new UpdateTableInformation(name);
+						
+					}
+				});
+			}
+		});
+		btnNewButton.setFont(new Font("Arial", Font.ITALIC, 20));
 		GroupLayout gl_CoursePanel = new GroupLayout(CoursePanel);
 		gl_CoursePanel.setHorizontalGroup(
 			gl_CoursePanel.createParallelGroup(Alignment.LEADING)
@@ -272,13 +314,19 @@ private void activeBtn(int R,int G,int B,String a) {
 					.addContainerGap()
 					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
 					.addGap(20))
+				.addGroup(gl_CoursePanel.createSequentialGroup()
+					.addGap(193)
+					.addComponent(btnNewButton)
+					.addContainerGap(293, Short.MAX_VALUE))
 		);
 		gl_CoursePanel.setVerticalGroup(
-			gl_CoursePanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_CoursePanel.createSequentialGroup()
+			gl_CoursePanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_CoursePanel.createSequentialGroup()
 					.addContainerGap(77, Short.MAX_VALUE)
 					.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 393, GroupLayout.PREFERRED_SIZE)
-					.addGap(89))
+					.addGap(30)
+					.addComponent(btnNewButton)
+					.addGap(36))
 		);
 		
 		CourseTable = new JTable();
@@ -289,17 +337,18 @@ private void activeBtn(int R,int G,int B,String a) {
 				int selecterOption=JOptionPane.showOptionDialog(null, "Do you want to update or delete?", "Update or delete Course",
 						JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
 				if(selecterOption==0) {
-				CourseInfo dialog = new CourseInfo((String) CourseTable.getValueAt(CourseTable.getSelectedRow(), 0));
-				dialog.setVisible(true);
-				for(int i =0;i<CourseTable.getColumnCount();i++) {
-					String info = (String) CourseTable.getValueAt(CourseTable.getSelectedRow(), i);
-					System.out.println(info);
-					if(dialog.getDisplayCourseName().getText().isEmpty()) {
-						dialog.getDisplayCourseName().setText(info);
-					}else if(dialog.getDisplayYear().getText().isEmpty()) {
-						dialog.getDisplayYear().setText(info);
-					}
-				}
+					String name = (String) CourseTable.getValueAt(CourseTable.getSelectedRow(), 0);
+					String year = (String) CourseTable.getValueAt(CourseTable.getSelectedRow(), 1);
+				CourseInfo displayInfo = new CourseInfo(name);
+				displayInfo.setVisible(true);
+//				for(int i =0;i<CourseTable.getColumnCount();i++) {
+					
+//					if(dialog.getDisplayCourseName().getText().isEmpty()) {
+						displayInfo.getDisplayCourseName().setText(name);
+//					}else if(dialog.getDisplayYear().getText().isEmpty()) {
+						displayInfo.getDisplayYear().setText(year);
+//					}
+				
 			}else if(selecterOption==1) {
 				Object[] confirm= {"Yes","No"};
 				int confirmOption=JOptionPane.showOptionDialog(null, "Are you sure u want to delete?", "Confirm",
@@ -313,6 +362,10 @@ private void activeBtn(int R,int G,int B,String a) {
 		CourseTable.setDefaultEditor(Object.class, null);
 		CourseTable.setFont(new Font("Arial", Font.ITALIC, 15));
 		CourseTable.setModel(coursemodel);
+		course_information = new courses_information();
+		for(int i=0;i<course_information.getDataNum();i++) {
+		coursemodel.addRow(new Object[] {course_information.getCourseName(i),course_information.getCourseYear(i)});
+		}
 		CourseTable.getColumnModel().getColumn(0).setPreferredWidth(85);
 		scrollPane_1.setViewportView(CourseTable);
 		CoursePanel.setLayout(gl_CoursePanel);
@@ -336,10 +389,12 @@ private void activeBtn(int R,int G,int B,String a) {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 //						System.out.println("clicked");
-						Object[] informations = {form.getLblshowID().getText(),form.getFirstNametextField().getText(),form.getLastNametextField().getText(),form.getNumbertextField().getText(),
-								form.getAddresstextField().getText(),form.getTypetextField().getText()};
-						new UpdateTableInformation(form.getUsername().getText().trim(),form.getPassword().getText().trim(),form.getFirstNametextField().getText().trim(),form.getLastNametextField().getText().trim(),
-								form.getAddresstextField().getText().trim(),form.getNumbertextField().getText().trim(),form.getTypetextField().getText().trim());
+
+						selected(form);
+						Object[] informations = {form.getLblshowID().getText(),form.getFirstNametextField().getText(),form.getLastNametextField().getText(),Sex,form.getNumbertextField().getText(),
+								form.getAddresstextField().getText(),Type,form.getModuleAssignedtextField().getText().trim()};
+						new UpdateTableInformation(form.getUsernametextField().getText().trim(),form.getPasswordtextField().getText().trim(),form.getFirstNametextField().getText().trim(),form.getLastNametextField().getText().trim(),
+								Sex,form.getAddresstextField().getText().trim(),form.getNumbertextField().getText().trim(),Type,form.getModuleAssignedtextField().getText().trim());
 					
 //						for(int i=0;i<4;i++) {
 //							System.out.println(informations[i]);
@@ -387,7 +442,7 @@ private void activeBtn(int R,int G,int B,String a) {
 				int selecterOption=JOptionPane.showOptionDialog(null, "Do you want to update or delete?", "Update or delete teacher",
 						JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
 				if(selecterOption==0) {
-					ArrayList<Object> informations = new ArrayList<>();
+					ArrayList<String> informations = new ArrayList<>();
 					int selectedRow = TeacherTable.getSelectedRow();
 					// Opening the form we made
 					AddTeacherForm form = new AddTeacherForm();
@@ -397,49 +452,58 @@ private void activeBtn(int R,int G,int B,String a) {
 					btnSubmit.addMouseListener(new MouseAdapter() {
 						@Override
 						public void mouseClicked(MouseEvent e) {
-//							System.out.println("clicked");
-							new UpdateTableInformation(form.getLblshowID().getText().trim(),form.getFirstNametextField().getText().trim(),form.getLastNametextField().getText().trim(),
-									form.getAddresstextField().getText().trim(),form.getNumbertextField().getText().trim(),form.getTypetextField().getText().trim());
+//							for (Enumeration<AbstractButton> buttons = form.getButtonGroup().getElements(); buttons.hasMoreElements();) {
+//			                    AbstractButton button = buttons.nextElement();
+//			                    if (button.isSelected()) {
+//			                    	Sex = button.getText();
+//			                    }}
+							selected(form);
+							new UpdateTableInformation(form.getLblshowID().getText().trim(),form.getUsernametextField().getText().trim(),form.getPasswordtextField().getText().trim(),
+									form.getFirstNametextField().getText().trim(),form.getLastNametextField().getText().trim(),Sex,form.getAddresstextField().getText().trim(),
+									form.getNumbertextField().getText().trim(),Type,form.getModuleAssignedtextField().getText().trim());
+							informations.add(form.getLblshowID().getText());	
+							informations.add(form.getFirstNametextField().getText());
+							informations.add(form.getLastNametextField().getText());
+							informations.add(Sex);
+							informations.add(form.getNumbertextField().getText());	
+							informations.add(form.getAddresstextField().getText());
+							informations.add(Type);
+							informations.add(form.getModuleAssignedtextField().getText());
 							for(int i=1;i<TeacherTable.getColumnCount();i++) {
-								String info = ((JTextField) informations.get(i)).getText();
+								String info = informations.get(i);
 								TeacherTable.setValueAt(info, selectedRow, i);
-								//String Id,String Firstname, String Lastname, String Address,String Phonenumber,String type
-//								UPDATE `teacher_info` SET `userName` = 'brook' WHERE `teacher_info`.`id` = 1;
 								form.dispose();
 								
 						}
 						}});
-
+					
+					// To update the database infos>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+					// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 						form.getLblshowID().setText(teacher_information.getId(selectedRow));
-						informations.add(form.getLblshowID());
-//					for(int i=1;i<TeacherTable.getColumnCount();i++) {
-//						String info = (String) TeacherTable.getValueAt(selectedRow, i);
-//						
-//						if(form.getFirstNametextField().getText().isEmpty()) {
-//							
+						
+						
 							form.getFirstNametextField().setText(teacher_information.getfirstName(selectedRow));
-							informations.add(form.getFirstNametextField());
-//							
-//						}else if(form.getLastNametextField().getText().isEmpty()) {
+						
+						
 							
 							form.getLastNametextField().setText(teacher_information.getlastName(selectedRow));
-							informations.add(form.getLastNametextField());
-//							
-//						}else if(form.getNumbertextField().getText().isEmpty()) {
-//							
-							form.getNumbertextField().setText(teacher_information.getPhoneNumber(selectedRow));
-							informations.add(form.getNumbertextField());
-//							
-//						}else {
-//							
-							form.getAddresstextField().setText(teacher_information.getAddress(selectedRow));
-							informations.add(form.getAddresstextField());
 							
-							form.getTypetextField().setText(teacher_information.getType(selectedRow));
-							informations.add(form.getTypetextField());
-//							
-//						}
-//					}
+							
+									
+							form.getNumbertextField().setText(teacher_information.getPhoneNumber(selectedRow));
+							
+							
+							form.getAddresstextField().setText(teacher_information.getAddress(selectedRow));
+							
+							
+//							form.getTypetextField().setText(teacher_information.getType(selectedRow));
+//							informations.add(form.getTypetextField());
+//							informations.add();
+							
+							form.getUsernametextField().setText(teacher_information.getUserName(selectedRow));
+							form.getPasswordtextField().setText(teacher_information.getPassWord(selectedRow));
+							form.getModuleAssignedtextField().setText(teacher_information.getModuleAssigned(selectedRow));
+
 					
 				}else if (selecterOption==1) {
 					Object[] comfirm= {"Yes","No"};
@@ -468,36 +532,108 @@ private void activeBtn(int R,int G,int B,String a) {
 		panel_right.add(StdPanel, "name_29680139631500");
 		
 		JScrollPane scrollPane_2 = new JScrollPane();
+		
+		JButton btnAddStd = new JButton("Add Student");
+		btnAddStd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddStdForm stdForm = new AddStdForm();
+				stdForm.setVisible(true);
+				JButton btnSubmit = stdForm.getBtnSubmit();
+				btnSubmit.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						selectedforStd(stdForm);
+						System.out.println(Sex);
+						new UpdateTableInformation(0,stdForm.getUsernametextField().getText().trim(),stdForm.getPasswordtextField().getText().trim(),
+								stdForm.getFirstnametextField().getText().trim(),stdForm.getLastnametextField().getText().trim(),stdForm.getPhonenumtextField().getText().trim()
+								,Sex,stdForm.getAddresstextField().getText().trim(),stdForm.getEmailtextField().getText().trim(),level);
+					}
+		});
+				JComboBox levelSelected = stdForm.getLevelSelected();
+				levelSelected.addItemListener(new ItemListener() {
+					public void itemStateChanged(ItemEvent e) {
+						if(e.getStateChange() == 1) {
+							level = (String) e.getItem();
+							System.out.println(level);
+						}
+					}
+				});
+			}
+		});
+		btnAddStd.setFont(new Font("Arial", Font.ITALIC, 20));
 		GroupLayout gl_StdPanel = new GroupLayout(StdPanel);
 		gl_StdPanel.setHorizontalGroup(
-			gl_StdPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_StdPanel.createSequentialGroup()
+			gl_StdPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_StdPanel.createSequentialGroup()
 					.addContainerGap(31, Short.MAX_VALUE)
 					.addComponent(scrollPane_2, GroupLayout.PREFERRED_SIZE, 569, GroupLayout.PREFERRED_SIZE)
 					.addGap(23))
+				.addGroup(Alignment.LEADING, gl_StdPanel.createSequentialGroup()
+					.addGap(217)
+					.addComponent(btnAddStd)
+					.addContainerGap(317, Short.MAX_VALUE))
 		);
 		gl_StdPanel.setVerticalGroup(
 			gl_StdPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_StdPanel.createSequentialGroup()
 					.addGap(38)
 					.addComponent(scrollPane_2, GroupLayout.PREFERRED_SIZE, 452, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(69, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnAddStd)
+					.addContainerGap(25, Short.MAX_VALUE))
 		);
 		
 		stdTable = new JTable();
+		stdTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int selectedRow = stdTable.getSelectedRow();
+				Object[] options= {"Update","Delete"};
+				int selecterOption=JOptionPane.showOptionDialog(null, "Do you want to update or delete?", "Update or delete Student",
+						JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
+				if(selecterOption==0) {
+					 stdForm = new AddStdForm();
+					 stdForm.setVisible(true);
+					 String id =student_information.getId(selectedRow);
+					 stdForm.getUsernametextField().setText(student_information.getUserName(selectedRow));
+					 stdForm.getPasswordtextField().setText(student_information.getPassWord(selectedRow));
+					 stdForm.getFirstnametextField().setText(student_information.getfirstName(selectedRow));
+					 stdForm.getLastnametextField().setText(student_information.getlastName(selectedRow));
+					 stdForm.getPhonenumtextField().setText(student_information.getPhoneNumber(selectedRow));
+					 stdForm.getAddresstextField().setText(student_information.getAddress(selectedRow));
+					 stdForm.getEmailtextField().setText(student_information.getEmail(selectedRow));
+					JButton btnSubmit = stdForm.getBtnSubmit();
+					btnSubmit.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							selectedforStd(stdForm);
+//							(int id,String Username,String Password,String Firstname, String Lastname,String Phonenumber,String Sex, String Address,String email,String level) {
+							new UpdateTableInformation(id,stdForm.getUsernametextField().getText().trim(),stdForm.getPasswordtextField().getText().trim(), stdForm.getFirstnametextField().getText().trim(),
+									 stdForm.getLastnametextField().getText().trim(), stdForm.getPhonenumtextField().getText(),Sex.trim(),stdForm.getAddresstextField().getText().trim(),
+									 stdForm.getEmailtextField().getText().trim(),level,"k");
+							stdForm.dispose();
+						        }});
+						
+				}else if(selecterOption == 1) {
+					Object[] comfirm= {"Yes","No"};
+				int confirm=JOptionPane.showOptionDialog(null, "Are you sure you want to delete?", "Confirm",
+						JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,comfirm,comfirm[0]);
+				if(confirm ==0) {
+					new DeleteInformations("0", student_information.getPhoneNumber(selectedRow));
+					StdModal.removeRow(selectedRow);
+				}
+				}
+			}
+		});
 		stdTable.setDefaultEditor(Object.class, null);
 		stdTable.setFont(new Font("Arial", Font.ITALIC, 15));
-		stdTable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Nami", null, "female", "Egghead,new World", null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-			},
-			new String[] {
-				"First Name", "Last Name", "Sex", "Address", "Level"
-			}
-		));
+		stdTable.setModel(StdModal);
+		student_information = new Std_info();
+		int size = student_information.getSize();
+		for(int i=0;i<size;i++) {
+			StdModal.addRow(new Object[] {student_information.getfirstName(i),student_information.getlastName(i),student_information.getSex(i),student_information.getPhoneNumber(i),
+					student_information.getAddress(i),student_information.getLevel(i)});
+		}
 		stdTable.getColumnModel().getColumn(3).setPreferredWidth(110);
 		scrollPane_2.setViewportView(stdTable);
 		StdPanel.setLayout(gl_StdPanel);
@@ -507,15 +643,36 @@ private void activeBtn(int R,int G,int B,String a) {
 		SplitPane.setDividerLocation(160);
 	}
 	
-	// function to display teacher data in jtable
+	// function to display teacher data in table
 	public <E> void displayTeachData() {
 		teacher_information=new Teacher_info();
 		int size=teacher_information.getSize();
 		for(int i=0;i<size;i++) {
-		Object[] name = {teacher_information.getId(i),teacher_information.getfirstName(i),teacher_information.getlastName(i),teacher_information.getPhoneNumber(i),teacher_information.getAddress(i),teacher_information.getType(i)};
+		Object[] name = {teacher_information.getId(i),teacher_information.getfirstName(i),teacher_information.getlastName(i),teacher_information.getSex(i),
+				teacher_information.getPhoneNumber(i),teacher_information.getAddress(i),teacher_information.getType(i),teacher_information.getModuleAssigned(i)};
 		Teachermodel.addRow(name);
 		}
 		
 		
+	}
+	public void selected(AddTeacherForm form) {
+	for (Enumeration<AbstractButton> buttons = form.getButtonGroup().getElements(); buttons.hasMoreElements();) {
+        AbstractButton button = buttons.nextElement();
+        if (button.isSelected()) {
+        	Sex = button.getText();
+        }}
+	
+	if(form.getIsPartTimeCheckBox().isSelected()) {
+		Type = "Part-time";
+	}else {
+		Type="Full-time";
+	}
+	}
+	public void selectedforStd(AddStdForm form) {
+		for (Enumeration<AbstractButton> buttons = form.getButtonGroup().getElements(); buttons.hasMoreElements();) {
+	        AbstractButton button = buttons.nextElement();
+	        if (button.isSelected()) {
+	        	Sex = button.getText();
+	        }}
 	}
 }

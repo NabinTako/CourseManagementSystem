@@ -25,6 +25,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
 
+import FinalBackend.Std_info;
 import FinalBackend.Teacher_info;
 import FinalBackend.admin_info;
 
@@ -39,6 +40,7 @@ public class Login {
 
 	admin_info adminInfo = new admin_info();
 	Teacher_info teacher_info = new Teacher_info();
+	Std_info std_info = new Std_info();
 	
 	// ++++++++++++++++++++++++++++++++++++++++++++++++
 	
@@ -160,25 +162,26 @@ public class Login {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					for(int i=0;i<adminInfo.getDtaNumber();i++) {
 						
-					if(valueFromComboBox.equals("Student")) {	
-				if(userNameTextField.getText().equals("std") && Arrays.equals(passwordField.getPassword(),new char[] {'s','t','d'}) && valueFromComboBox.equals("Student")) {
+					if(valueFromComboBox.equals("Student")) {
+						for(int i=0;i<std_info.getSize();i++) {
+				if(userNameTextField.getText().equals(std_info.getUserName(i)) && String.valueOf(passwordField.getPassword()).equals(std_info.getPassWord(i)) && valueFromComboBox.equals("Student")) {
 					studentDashboard window = new studentDashboard();
 					window.getFrame().setVisible(true);
 					frame.dispose();
-				} else if(!userNameTextField.getText().equals("std") || !Arrays.equals(passwordField.getPassword(),new char[] {'s','t','d'}) ){
+				} else if(!userNameTextField.getText().equals(std_info.getUserName(i)) || !String.valueOf(passwordField.getPassword()).equals(std_info.getPassWord(i)) ){
 					ErroeLabel.setFont(new Font("Arial", Font.BOLD, size));
 					ErroeLabel.setVisible(true);
 					lblNewLabel_5.setVisible(false);
 					size+=1;
-				}else if (userNameTextField.getText().equals("std") && Arrays.equals(passwordField.getPassword(),new char[] {'s','t','d'}) && !valueFromComboBox.equals("Student")) {
+				}else if (userNameTextField.getText().equals(std_info.getUserName(i)) && String.valueOf(passwordField.getPassword()).equals(std_info.getPassWord(i)) && !valueFromComboBox.equals("Student")) {
 					lblNewLabel_5.setFont(new Font("Arial", Font.BOLD, size));
 					ErroeLabel.setVisible(false);
 					lblNewLabel_5.setVisible(true);
 					size +=1;
-				}
+				}}
 				}else if(valueFromComboBox.equals("Admin")) {
+					for(int i=0;i<adminInfo.getDtaNumber();i++) {
 				if(userNameTextField.getText().equals(adminInfo.getUserName(i)) && String.valueOf(passwordField.getPassword()).equals(adminInfo.getPassWord(i)) && valueFromComboBox.equals("Admin")) {
 					AdminDashboard window = new AdminDashboard();
 					window.getFrame().setVisible(true);
@@ -194,8 +197,9 @@ public class Login {
 					lblNewLabel_5.setVisible(true);
 					size +=1;
 					
-				}
+				} }
 				}else if(valueFromComboBox.equals("Teacher")) {
+					for(int i=0;i<teacher_info.getSize();i++) {
 					if(userNameTextField.getText().equalsIgnoreCase(teacher_info.getUserName(i)) && String.valueOf(passwordField.getPassword()).equals(teacher_info.getPassWord(i)) && valueFromComboBox.equals("Teacher")) {
 						TeacherDashnoard window = new TeacherDashnoard();
 						window.getFrame().setVisible(true);
@@ -211,10 +215,11 @@ public class Login {
 						lblNewLabel_5.setVisible(true);
 						size +=1;
 					}
+					}
 				}else {
 					lblNewLabel_5.setVisible(true);
 					ErroeLabel.setVisible(false);
-				}}
+				}
 
 				if(size>=18) {
 					size=15;

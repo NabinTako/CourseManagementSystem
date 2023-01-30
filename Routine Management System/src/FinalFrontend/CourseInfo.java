@@ -18,19 +18,21 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import FinalBackend.UpdateTableInformation;
 import FinalBackend.course_info;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CourseInfo extends JDialog {
 	private JTable ModulesTable;
 	
 	DefaultTableModel model = new DefaultTableModel(
 			new Object[][] {
-				{null, null},
 			},
 			new String[] {
 				"Name", "Module Number","level","semester","credit","type"
@@ -38,6 +40,11 @@ public class CourseInfo extends JDialog {
 		);
 	private JLabel DisplayCourseName;
 	private JLabel DisplayYear;
+	private JButton btnAddModule;
+
+	public JButton getBtnAddModule() {
+		return btnAddModule;
+	}
 
 	public JLabel getDisplayCourseName() {
 		return DisplayCourseName;
@@ -61,10 +68,13 @@ public class CourseInfo extends JDialog {
 	}
 
 	/**
+		
 	 * Create the dialog.
 	 */
-	public CourseInfo(String CourseName) {
+	public CourseInfo(String Name) {
+		String CourseName = Name.toLowerCase().trim();
 		setTitle(CourseName);
+		List<Object> Id = new ArrayList<>();
 		List<Object> Modulename = new ArrayList<>();
 		List<Object> Modulenumber = new ArrayList<>();
 		List<Object> level = new ArrayList<>();
@@ -75,6 +85,7 @@ public class CourseInfo extends JDialog {
 		setBounds(100, 100, 800, 600);
 //		int i;
 		for(int i=0;i<informations.getModule().size();i++) {
+			Id.add(informations.getModule(i));
 			Modulename.add(informations.getModule(i));
 			Modulenumber.add(informations.getModuleNumber(i));
 			level.add(informations.getLevel(i));
@@ -99,8 +110,27 @@ public class CourseInfo extends JDialog {
 		DisplayYear = new JLabel("");
 		DisplayYear.setFont(new Font("Arial", Font.ITALIC, 20));
 		
-		JButton btnNewButton = new JButton("Add Module");
-		btnNewButton.setFont(new Font("Arial", Font.ITALIC, 20));
+		btnAddModule = new JButton("Add Module");
+		btnAddModule.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddModuleForm form = new AddModuleForm(CourseName);
+				JButton btnAdd = form.getBtnAdd();
+				btnAdd.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						new UpdateTableInformation(CourseName,form.getModuleNametextField().getText().trim(),form.getModuleNumtextField().getText().trim(),
+								form.getSemesterSelected(),form.getLevelSelected(),form.getCredittextField().getText().trim(),form.getTypeSelected());
+							form.dispose();
+							model.addRow(new Object[] {form.getModuleNametextField().getText().trim(),form.getModuleNumtextField().getText().trim(),
+								form.getSemesterSelected(),form.getLevelSelected(),form.getCredittextField().getText().trim(),form.getTypeSelected()});
+						
+					}
+				});
+				
+				form.setVisible(true);
+			}
+		});
+		
+		btnAddModule.setFont(new Font("Arial", Font.ITALIC, 20));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -119,7 +149,7 @@ public class CourseInfo extends JDialog {
 									.addComponent(DisplayCourseName, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(308)
-							.addComponent(btnNewButton))
+							.addComponent(btnAddModule))
 						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)))
@@ -139,7 +169,7 @@ public class CourseInfo extends JDialog {
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 359, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(btnNewButton)
+					.addComponent(btnAddModule)
 					.addContainerGap())
 		);
 		
@@ -152,6 +182,27 @@ public class CourseInfo extends JDialog {
 				int userOption=JOptionPane.showOptionDialog(null, "Do you want to update or delete?", "Update or delete module",
 						JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
 				if(userOption==0) {
+					AddModuleForm form = new AddModuleForm(CourseName);
+					form.setVisible(true);
+					int selectedRow = ModulesTable.getSelectedRow();
+					form.getModuleNametextField().setText((String) Modulename.get(selectedRow));
+					form.getModuleNumtextField().setText((String) Modulenumber.get(selectedRow));
+					form.getSemesterSelected();
+					form.getLevelSelected();
+					form.getCredittextField().setText((String) credit.get(selectedRow));
+					form.getTypeSelected();
+					JButton btnAdd = form.getBtnAdd();
+					btnAdd.setText("Update");
+					btnAdd.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						System.out.println(form.getModuleNametextField().getText().trim());
+						new UpdateTableInformation((String) Id.get(selectedRow),CourseName,form.getModuleNametextField().getText().trim(),form.getModuleNumtextField().getText().trim(),
+								form.getSemesterSelected(),form.getLevelSelected(),form.getCredittextField().getText().trim(),form.getTypeSelected());
+							form.dispose();
+							ModulesTable.setValueAt(form.getModuleNametextField().getText().trim(), selectedRow, 0);
+							ModulesTable.setValueAt(form.getModuleNumtextField().getText().trim(), selectedRow, 1);
+					}
+				});
 					
 				}
 			}

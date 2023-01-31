@@ -83,8 +83,8 @@ public class Teacher_info {
 					Type.add(resultset.getString("type"));
 					ModuleAssigned.add(resultset.getString("Module"));
 					dataNum++;
-					System.err.println(resultset.getString("userName"));
-					System.err.println(resultset.getString("passWord"));
+//					System.err.println(resultset.getString("userName"));
+//					System.err.println(resultset.getString("passWord"));
 				}
 //				for(int i=0;i<3;i++) { 
 //					System.out.println(userName.get(i));

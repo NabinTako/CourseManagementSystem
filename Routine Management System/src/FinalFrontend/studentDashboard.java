@@ -31,7 +31,16 @@ import java.awt.SystemColor;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import FinalBackend.GetAssignment;
+import FinalBackend.Std_info;
+import FinalBackend.Teacher_info;
+import javax.swing.JComboBox;
+
 public class studentDashboard {
+	
+	Teacher_info teacher_info;
+	Std_info std_info;
+	GetAssignment getworks;
 
 	private JFrame frame;
 
@@ -46,7 +55,40 @@ public class studentDashboard {
 	private JButton btnModule;
 	private JButton btnTeacher;
 	private JTable TeacherTable;
-	private JTable ClassmateTable;
+	
+	DefaultTableModel TeacherModel =new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"First Name", "Last Name", "Sex", "Module"
+			}
+		);
+	DefaultTableModel StdModel = new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"First name", "Last name", "Email", "Sex", "Level"
+			});
+	
+	DefaultTableModel oodpModle = new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null},
+			},
+			new String[] {
+				"Uploaded By", "Q1", "Q2", "Q3", "Q4"
+			}
+		);
+	DefaultTableModel cModle = new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null, null},
+			},
+			new String[] {
+				"Uploaded By", "Q1", "Q2", "Q3", "Q4"
+			}
+		);
+	private JTable Stdtable;
+	private JTable oodptable;
+	private JTable Ctable;
 
 	/**
 	 * Launch the application.
@@ -70,7 +112,7 @@ public class studentDashboard {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					studentDashboard window = new studentDashboard();
+					studentDashboard window = new studentDashboard("j","k");
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -82,14 +124,15 @@ public class studentDashboard {
 	/**
 	 * Create the application.
 	 */
-	public studentDashboard() {
-		initialize();
+	public studentDashboard(String firstname,String lastname) {
+		initialize(firstname,lastname);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(String firstname,String lastname) {
+		String fullname = firstname+" "+lastname;
 //		JSplitPane splitPane = new JSplitPane();
 //		splitPane.setBounds(0, 0, 784, 561);
 //		frmNAdminPannel.setBounds(550, 200, 800, 600);
@@ -220,7 +263,21 @@ public class studentDashboard {
 		});
 		
 		JButton btnResult = new JButton("View Result");
+		btnResult.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_cardPanel.show(panel, "name_547851383737699");
+			}
+		});
 		btnResult.setFont(new Font("Arial", Font.ITALIC, 15));
+		
+		JButton btnClassmates = new JButton("classmates");
+		btnClassmates.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cl_cardPanel.show(panel, "name_547834953442900");
+			}
+		});
+		btnClassmates.setFont(new Font("Arial", Font.ITALIC, 15));
+		btnClassmates.setBackground(new Color(255, 250, 205));
 		GroupLayout gl_streamPanel = new GroupLayout(streamPanel);
 		gl_streamPanel.setHorizontalGroup(
 			gl_streamPanel.createParallelGroup(Alignment.LEADING)
@@ -229,7 +286,9 @@ public class studentDashboard {
 					.addComponent(OODPBtn)
 					.addGap(35)
 					.addComponent(btnConcurancy)
-					.addPreferredGap(ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+					.addComponent(btnClassmates, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+					.addGap(28)
 					.addComponent(btnResult)
 					.addContainerGap())
 		);
@@ -240,7 +299,8 @@ public class studentDashboard {
 					.addGroup(gl_streamPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(OODPBtn)
 						.addComponent(btnConcurancy)
-						.addComponent(btnResult))
+						.addComponent(btnResult)
+						.addComponent(btnClassmates, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(423, Short.MAX_VALUE))
 		);
 		streamPanel.setLayout(gl_streamPanel);
@@ -261,32 +321,19 @@ public class studentDashboard {
 			}
 		});
 		StreamBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		JLabel PeopleBtn = new JLabel("People");
-		PeopleBtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				cl_Model_Panel.show(Model_Panel,"name_18635330178400");
-			}
-		});
-		PeopleBtn.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GroupLayout gl_inModuleTop = new GroupLayout(inModuleTop);
 		gl_inModuleTop.setHorizontalGroup(
 			gl_inModuleTop.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_inModuleTop.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(StreamBtn, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-					.addGap(58)
-					.addComponent(PeopleBtn, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(305, Short.MAX_VALUE))
+					.addContainerGap(423, Short.MAX_VALUE))
 		);
 		gl_inModuleTop.setVerticalGroup(
 			gl_inModuleTop.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_inModuleTop.createSequentialGroup()
-					.addGroup(gl_inModuleTop.createParallelGroup(Alignment.BASELINE)
-						.addComponent(StreamBtn, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-						.addComponent(PeopleBtn, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(12, Short.MAX_VALUE))
+					.addComponent(StreamBtn, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		inModuleTop.setLayout(gl_inModuleTop);
 		
@@ -298,47 +345,34 @@ public class studentDashboard {
 		StreamView.setBackground(new Color(102, 153, 153));
 		Model_Panel.add(StreamView, "name_18615144178400");
 		
-		JPanel PeopleView = new JPanel();
-		PeopleView.setBackground(new Color(204, 204, 204));
-		Model_Panel.add(PeopleView, "name_18635330178400");
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		GroupLayout gl_PeopleView = new GroupLayout(PeopleView);
-		gl_PeopleView.setHorizontalGroup(
-			gl_PeopleView.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_PeopleView.createSequentialGroup()
+		JScrollPane scrollPane_2 = new JScrollPane();
+		GroupLayout gl_StreamView = new GroupLayout(StreamView);
+		gl_StreamView.setHorizontalGroup(
+			gl_StreamView.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_StreamView.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+					.addComponent(scrollPane_2, GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
 					.addContainerGap())
 		);
-		gl_PeopleView.setVerticalGroup(
-			gl_PeopleView.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_PeopleView.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+		gl_StreamView.setVerticalGroup(
+			gl_StreamView.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_StreamView.createSequentialGroup()
+					.addGap(9)
+					.addComponent(scrollPane_2, GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
-		ClassmateTable = new JTable();
-		ClassmateTable.setDefaultEditor(Object.class, null);
-		ClassmateTable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"Nami", null, "female", "Berry@newWorld.com"},
-				{"Robin", "Devil's child", "female", "Devil@friends.com"},
-				{"Zorro", null, "male", "Alwayslost@places.com"},
-				{"Sanji", null, "male", "Best@cooking.com"},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-			},
-			new String[] {
-				"First Name", "Second Name", "Sex", "Email"
-			}
-		));
-		ClassmateTable.getColumnModel().getColumn(3).setPreferredWidth(150);
-		ClassmateTable.setFont(new Font("Arial", Font.ITALIC, 15));
-		scrollPane_1.setViewportView(ClassmateTable);
-		PeopleView.setLayout(gl_PeopleView);
+		oodptable = new JTable();
+		oodptable.setModel(oodpModle);
+		getworks = new GetAssignment();
+		for(int i=0;i<getworks.getOodpSize();i++) {
+			oodpModle.addRow(new Object[] {getworks.getOodpname(i),getworks.getOodpq1(i),getworks.getOodpq2(i),getworks.getOodpq3(i),getworks.getOodpq4(i)});
+		}
+//		
+		oodptable.setDefaultEditor(Object.class, null);
+		oodptable.setFont(new Font("Arial", Font.ITALIC, 16));
+		scrollPane_2.setViewportView(oodptable);
+		StreamView.setLayout(gl_StreamView);
 		OODP.setDividerLocation(30);
 		
 		JSplitPane Concurancy = new JSplitPane();
@@ -357,32 +391,19 @@ public class studentDashboard {
 			}
 		});
 		StreamBtn_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		JLabel PeopleBtn_2 = new JLabel("People");
-		PeopleBtn_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				cl_Model_panel2.show(Model_panel2,"name_211500318189700");
-			}
-		});
-		PeopleBtn_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		GroupLayout gl_inModuleTop_2 = new GroupLayout(inModuleTop_2);
 		gl_inModuleTop_2.setHorizontalGroup(
 			gl_inModuleTop_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_inModuleTop_2.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(StreamBtn_2, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-					.addGap(66)
-					.addComponent(PeopleBtn_2, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(297, Short.MAX_VALUE))
+					.addContainerGap(417, Short.MAX_VALUE))
 		);
 		gl_inModuleTop_2.setVerticalGroup(
 			gl_inModuleTop_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_inModuleTop_2.createSequentialGroup()
-					.addGroup(gl_inModuleTop_2.createParallelGroup(Alignment.BASELINE)
-						.addComponent(StreamBtn_2, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-						.addComponent(PeopleBtn_2, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(12, Short.MAX_VALUE))
+					.addComponent(StreamBtn_2, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		inModuleTop_2.setLayout(gl_inModuleTop_2);
 		
@@ -394,12 +415,37 @@ public class studentDashboard {
 		StreamView2.setBackground(new Color(102, 153, 153));
 		Model_panel2.add(StreamView2, "name_19090528781200");
 		
-		JPanel PeopleView2 = new JPanel();
-		PeopleView2.setBackground(new Color(204, 204, 204));
-		Model_panel2.add(PeopleView2, "name_19093441402800");
+		JScrollPane scrollPane_3 = new JScrollPane();
+		scrollPane_3.setBackground(Color.LIGHT_GRAY);
+		GroupLayout gl_StreamView2 = new GroupLayout(StreamView2);
+		gl_StreamView2.setHorizontalGroup(
+			gl_StreamView2.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_StreamView2.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane_3, GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_StreamView2.setVerticalGroup(
+			gl_StreamView2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_StreamView2.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane_3, GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		
+		Ctable = new JTable();
+		Ctable.setModel(cModle);
+		for(int i=0;i<getworks.getCSize();i++) {
+			cModle.addRow(new Object[] {getworks.getCname(i),getworks.getCq1(i),getworks.getCq2(i),getworks.getCq3(i),getworks.getCq4(i)});
+		}
+//		
+		Ctable.setDefaultEditor(Object.class, null);
+		scrollPane_3.setViewportView(Ctable);
+		StreamView2.setLayout(gl_StreamView2);
 		Concurancy.setDividerLocation(30);
 		
 		JPanel TeacherPanel = new JPanel();
+		TeacherPanel.setBackground(Color.LIGHT_GRAY);
 		panel.add(TeacherPanel, "name_211500318189700");
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -420,21 +466,121 @@ public class studentDashboard {
 		);
 		
 		TeacherTable = new JTable();
+		TeacherTable.setBackground(new Color(240,240,240));
 		TeacherTable.setDefaultEditor(Object.class, null);
-		TeacherTable.setModel(new DefaultTableModel(
-			new Object[][] {
-				{"brook", "dead", "Undead", "CanI@see.com"},
-				{null, null, null, null},
-				{null, null, null, null},
-			},
-			new String[] {
-				"First Name", "Last Name", "Sex", "Email"
-			}
-		));
+		TeacherTable.setModel(TeacherModel);
+		teacher_info = new Teacher_info();
+		for(int i=0;i<teacher_info.getSize();i++) {
+		TeacherModel.addRow(new Object[] {teacher_info.getfirstName(i),teacher_info.getlastName(i),teacher_info.getSex(i),teacher_info.getModuleAssigned(i)});
+		}
 		TeacherTable.getColumnModel().getColumn(3).setPreferredWidth(144);
-		TeacherTable.setFont(new Font("Arial", Font.ITALIC, 15));
+		TeacherTable.setFont(new Font("Arial", Font.ITALIC, 16));
 		scrollPane.setViewportView(TeacherTable);
 		TeacherPanel.setLayout(gl_TeacherPanel);
+		
+		JPanel ClassMate = new JPanel();
+		ClassMate.setBackground(new Color(143, 188, 143));
+		panel.add(ClassMate, "name_547834953442900");
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBackground(new Color(143, 188, 143));
+		GroupLayout gl_ClassMate = new GroupLayout(ClassMate);
+		gl_ClassMate.setHorizontalGroup(
+			gl_ClassMate.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_ClassMate.createSequentialGroup()
+					.addGap(19)
+					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_ClassMate.setVerticalGroup(
+			gl_ClassMate.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_ClassMate.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 476, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(21, Short.MAX_VALUE))
+		);
+		
+		Stdtable = new JTable();
+		Stdtable.setFont(new Font("Arial", Font.ITALIC, 16));
+		Stdtable.setModel(StdModel);
+		std_info = new Std_info();
+		for(int i=0;i<std_info.getSize();i++) {
+			StdModel.addRow(new Object[] {std_info.getfirstName(i),std_info.getlastName(i),std_info.getEmail(i),std_info.getSex(i),std_info.getLevel(i)});
+		}
+		Stdtable.setDefaultEditor(Object.class, null);
+		Stdtable.setBackground(new Color(143, 188, 143));
+		scrollPane_1.setViewportView(Stdtable);
+		ClassMate.setLayout(gl_ClassMate);
+		
+		JPanel SeeResult = new JPanel();
+		SeeResult.setBackground(new Color(143, 188, 143));
+		panel.add(SeeResult, "name_547851383737699");
+		
+		JLabel lblNewLabel_4 = new JLabel("Your Marks");
+		lblNewLabel_4.setFont(new Font("Arial", Font.ITALIC, 20));
+		
+		JLabel lblOODP = new JLabel("OODP");
+		lblOODP.setFont(new Font("Arial", Font.ITALIC, 20));
+		
+		JLabel lblNMC = new JLabel("NMC");
+		lblNMC.setFont(new Font("Arial", Font.ITALIC, 20));
+		
+		JLabel lblAI = new JLabel("AI");
+		lblAI.setFont(new Font("Arial", Font.ITALIC, 20));
+		
+		JLabel displayOODPmarks = new JLabel("OODP");
+		displayOODPmarks.setFont(new Font("Arial", Font.ITALIC, 20));
+		
+		JLabel displayNMCmarks = new JLabel("NMC");
+		displayNMCmarks.setFont(new Font("Arial", Font.ITALIC, 20));
+		
+		JLabel displayAImarks = new JLabel("AI");
+		displayAImarks.setFont(new Font("Arial", Font.ITALIC, 20));
+		GroupLayout gl_SeeResult = new GroupLayout(SeeResult);
+		gl_SeeResult.setHorizontalGroup(
+			gl_SeeResult.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_SeeResult.createSequentialGroup()
+					.addGroup(gl_SeeResult.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_SeeResult.createSequentialGroup()
+							.addGap(188)
+							.addComponent(lblNewLabel_4))
+						.addGroup(gl_SeeResult.createSequentialGroup()
+							.addGap(76)
+							.addGroup(gl_SeeResult.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_SeeResult.createSequentialGroup()
+									.addComponent(lblNMC, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(displayNMCmarks, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_SeeResult.createSequentialGroup()
+									.addComponent(lblOODP, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(displayOODPmarks, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_SeeResult.createSequentialGroup()
+									.addComponent(lblAI, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(displayAImarks, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)))))
+					.addContainerGap(197, Short.MAX_VALUE))
+		);
+		gl_SeeResult.setVerticalGroup(
+			gl_SeeResult.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_SeeResult.createSequentialGroup()
+					.addGap(28)
+					.addComponent(lblNewLabel_4)
+					.addGap(37)
+					.addGroup(gl_SeeResult.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblOODP, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+						.addComponent(displayOODPmarks, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_SeeResult.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNMC, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+						.addComponent(displayNMCmarks, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_SeeResult.createParallelGroup(Alignment.LEADING)
+						.addComponent(displayAImarks, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblAI, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(311, Short.MAX_VALUE))
+		);
+		SeeResult.setLayout(gl_SeeResult);
 		splitPane_1.setDividerLocation(50);
 		
 		JPanel panel_1 = new JPanel();
@@ -456,6 +602,11 @@ public class studentDashboard {
 		JLabel lblNewLabel_3 = new JLabel("Your Assignments:");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setFont(new Font("Arial", Font.ITALIC, 20));
+		
+		JLabel Name = new JLabel("name");
+		Name.setText(fullname);
+		Name.setHorizontalAlignment(SwingConstants.CENTER);
+		Name.setFont(new Font("Arial", Font.ITALIC, 20));
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.TRAILING)
@@ -471,9 +622,11 @@ public class studentDashboard {
 							.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap(61, Short.MAX_VALUE)
-					.addComponent(lblNewLabel_3)
-					.addGap(54))
+					.addContainerGap(63, Short.MAX_VALUE)
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
+						.addComponent(Name, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_3))
+					.addGap(52))
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -484,9 +637,11 @@ public class studentDashboard {
 						.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE))
 					.addGap(7)
 					.addComponent(lblNewLabel_2)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGap(3)
+					.addComponent(Name, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblNewLabel_3)
-					.addContainerGap(418, Short.MAX_VALUE))
+					.addContainerGap(396, Short.MAX_VALUE))
 		);
 		panel_1.setLayout(gl_panel_1);
 		SplitPane.setDividerLocation(500);

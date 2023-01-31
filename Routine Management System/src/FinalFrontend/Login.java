@@ -166,7 +166,7 @@ public class Login {
 					if(valueFromComboBox.equals("Student")) {
 						for(int i=0;i<std_info.getSize();i++) {
 				if(userNameTextField.getText().equals(std_info.getUserName(i)) && String.valueOf(passwordField.getPassword()).equals(std_info.getPassWord(i)) && valueFromComboBox.equals("Student")) {
-					studentDashboard window = new studentDashboard();
+					studentDashboard window = new studentDashboard(std_info.getfirstName(i),std_info.getlastName(i));
 					window.getFrame().setVisible(true);
 					frame.dispose();
 				} else if(!userNameTextField.getText().equals(std_info.getUserName(i)) || !String.valueOf(passwordField.getPassword()).equals(std_info.getPassWord(i)) ){
@@ -201,7 +201,7 @@ public class Login {
 				}else if(valueFromComboBox.equals("Teacher")) {
 					for(int i=0;i<teacher_info.getSize();i++) {
 					if(userNameTextField.getText().equalsIgnoreCase(teacher_info.getUserName(i)) && String.valueOf(passwordField.getPassword()).equals(teacher_info.getPassWord(i)) && valueFromComboBox.equals("Teacher")) {
-						TeacherDashnoard window = new TeacherDashnoard();
+						TeacherDashnoard window = new TeacherDashnoard(teacher_info.getfirstName(i),teacher_info.getlastName(i));
 						window.getFrame().setVisible(true);
 						frame.dispose();
 					} else if(!userNameTextField.getText().equals(teacher_info.getUserName(i)) || !String.valueOf(passwordField.getPassword()).equals(teacher_info.getPassWord(i))){

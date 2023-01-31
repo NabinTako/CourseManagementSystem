@@ -32,6 +32,7 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 import FinalBackend.GetAssignment;
+import FinalBackend.Getresult;
 import FinalBackend.Std_info;
 import FinalBackend.Teacher_info;
 import javax.swing.JComboBox;
@@ -41,6 +42,7 @@ public class studentDashboard {
 	Teacher_info teacher_info;
 	Std_info std_info;
 	GetAssignment getworks;
+	Getresult result;
 
 	private JFrame frame;
 
@@ -72,7 +74,6 @@ public class studentDashboard {
 	
 	DefaultTableModel oodpModle = new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
 			},
 			new String[] {
 				"Uploaded By", "Q1", "Q2", "Q3", "Q4"
@@ -80,7 +81,6 @@ public class studentDashboard {
 		);
 	DefaultTableModel cModle = new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
 			},
 			new String[] {
 				"Uploaded By", "Q1", "Q2", "Q3", "Q4"
@@ -90,6 +90,12 @@ public class studentDashboard {
 	private JTable oodptable;
 	private JTable Ctable;
 
+	
+	
+	private String fullname;
+	private JLabel displayCmarks;
+	private JLabel displayOODPmarks;
+//	private String firstname;
 	/**
 	 * Launch the application.
 	 */
@@ -132,8 +138,9 @@ public class studentDashboard {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(String firstname,String lastname) {
-		String fullname = firstname+" "+lastname;
-//		JSplitPane splitPane = new JSplitPane();
+		fullname = firstname+" "+lastname;
+//		firstname = firstname.toLowerCase();
+		//JSplitPane splitPane = new JSplitPane();
 //		splitPane.setBounds(0, 0, 784, 561);
 //		frmNAdminPannel.setBounds(550, 200, 800, 600);
 //		JSplitPane SplitPane = new JSplitPane();
@@ -265,7 +272,13 @@ public class studentDashboard {
 		JButton btnResult = new JButton("View Result");
 		btnResult.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				result = new Getresult();
+				result.seeResult(firstname);
+				int i = result.getIndex();
 				cl_cardPanel.show(panel, "name_547851383737699");
+				displayCmarks.setText(result.getOODPmark(i));
+				displayOODPmarks.setText(result.getCmark(i));
+				
 			}
 		});
 		btnResult.setFont(new Font("Arial", Font.ITALIC, 15));
@@ -363,10 +376,18 @@ public class studentDashboard {
 		);
 		
 		oodptable = new JTable();
+		oodptable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ask("oodp");
+			}
+		});
 		oodptable.setModel(oodpModle);
 		getworks = new GetAssignment();
-		for(int i=0;i<getworks.getOodpSize();i++) {
-			oodpModle.addRow(new Object[] {getworks.getOodpname(i),getworks.getOodpq1(i),getworks.getOodpq2(i),getworks.getOodpq3(i),getworks.getOodpq4(i)});
+		for(int i=0;i<getworks.getSize();i++) {
+			if(getworks.getModulename(i).equalsIgnoreCase("oodp")) {
+			oodpModle.addRow(new Object[] {getworks.getName(i),getworks.getQ1(i),getworks.getQ2(i),getworks.getQ3(i),getworks.getQ4(i)});
+			}
 		}
 //		
 		oodptable.setDefaultEditor(Object.class, null);
@@ -434,9 +455,17 @@ public class studentDashboard {
 		);
 		
 		Ctable = new JTable();
+		Ctable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ask("c");
+			}
+		});
 		Ctable.setModel(cModle);
-		for(int i=0;i<getworks.getCSize();i++) {
-			cModle.addRow(new Object[] {getworks.getCname(i),getworks.getCq1(i),getworks.getCq2(i),getworks.getCq3(i),getworks.getCq4(i)});
+		for(int i=0;i<getworks.getSize();i++) {
+			if(getworks.getModulename(i).equalsIgnoreCase("c")) {
+				cModle.addRow(new Object[] {getworks.getName(i),getworks.getQ1(i),getworks.getQ2(i),getworks.getQ3(i),getworks.getQ4(i)});
+				}
 		}
 //		
 		Ctable.setDefaultEditor(Object.class, null);
@@ -522,20 +551,14 @@ public class studentDashboard {
 		JLabel lblOODP = new JLabel("OODP");
 		lblOODP.setFont(new Font("Arial", Font.ITALIC, 20));
 		
-		JLabel lblNMC = new JLabel("NMC");
-		lblNMC.setFont(new Font("Arial", Font.ITALIC, 20));
+		JLabel lblC = new JLabel("C");
+		lblC.setFont(new Font("Arial", Font.ITALIC, 20));
 		
-		JLabel lblAI = new JLabel("AI");
-		lblAI.setFont(new Font("Arial", Font.ITALIC, 20));
-		
-		JLabel displayOODPmarks = new JLabel("OODP");
+		displayOODPmarks = new JLabel("OODP");
 		displayOODPmarks.setFont(new Font("Arial", Font.ITALIC, 20));
 		
-		JLabel displayNMCmarks = new JLabel("NMC");
-		displayNMCmarks.setFont(new Font("Arial", Font.ITALIC, 20));
-		
-		JLabel displayAImarks = new JLabel("AI");
-		displayAImarks.setFont(new Font("Arial", Font.ITALIC, 20));
+		displayCmarks = new JLabel("C");
+		displayCmarks.setFont(new Font("Arial", Font.ITALIC, 20));
 		GroupLayout gl_SeeResult = new GroupLayout(SeeResult);
 		gl_SeeResult.setHorizontalGroup(
 			gl_SeeResult.createParallelGroup(Alignment.TRAILING)
@@ -548,17 +571,13 @@ public class studentDashboard {
 							.addGap(76)
 							.addGroup(gl_SeeResult.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_SeeResult.createSequentialGroup()
-									.addComponent(lblNMC, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+									.addComponent(lblC, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
 									.addGap(18)
-									.addComponent(displayNMCmarks, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE))
+									.addComponent(displayCmarks, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE))
 								.addGroup(gl_SeeResult.createSequentialGroup()
 									.addComponent(lblOODP, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
 									.addGap(18)
-									.addComponent(displayOODPmarks, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_SeeResult.createSequentialGroup()
-									.addComponent(lblAI, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)
-									.addComponent(displayAImarks, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)))))
+									.addComponent(displayOODPmarks, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)))))
 					.addContainerGap(197, Short.MAX_VALUE))
 		);
 		gl_SeeResult.setVerticalGroup(
@@ -572,13 +591,9 @@ public class studentDashboard {
 						.addComponent(displayOODPmarks, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
 					.addGroup(gl_SeeResult.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNMC, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-						.addComponent(displayNMCmarks, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(gl_SeeResult.createParallelGroup(Alignment.LEADING)
-						.addComponent(displayAImarks, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblAI, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(311, Short.MAX_VALUE))
+						.addComponent(lblC, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+						.addComponent(displayCmarks, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(353, Short.MAX_VALUE))
 		);
 		SeeResult.setLayout(gl_SeeResult);
 		splitPane_1.setDividerLocation(50);
@@ -646,5 +661,25 @@ public class studentDashboard {
 		panel_1.setLayout(gl_panel_1);
 		SplitPane.setDividerLocation(500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	private void ask(String module) {
+		Object[] options= {"Start","Back"};
+		int selecterOption=JOptionPane.showOptionDialog(null, "Start Assignment?", "Conformation",
+				JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
+		if(selecterOption==0 && module.equalsIgnoreCase("oodp")) {
+			int i=oodptable.getSelectedRow();
+			AssignmentPannel Panel = new AssignmentPannel(module,fullname,getworks.getOodpname(i),getworks.getOodpnumber(i),getworks.getOodpq1(i),getworks.getOodpq2(i),getworks.getOodpq3(i),getworks.getOodpq4(i));
+			Panel.setVisible(true);
+			JButton btnNewButton = Panel.getBtnNewButton();
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Panel.dispose();
+					}});
+		}else if(selecterOption==0 && module.equalsIgnoreCase("c")) {
+			int i=Ctable.getSelectedRow();
+			AssignmentPannel Panel = new AssignmentPannel(module,fullname,getworks.getCname(i),getworks.getCnumber(i),getworks.getCq1(i),getworks.getCq2(i),getworks.getCq3(i),getworks.getCq4(i));
+			Panel.setVisible(true);
+		}
 	}
 }

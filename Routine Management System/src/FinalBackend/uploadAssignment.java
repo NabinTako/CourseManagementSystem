@@ -25,6 +25,21 @@ public class uploadAssignment {
 		}
 		
 	}
+	public uploadAssignment(String modulename,String number,String name,String Q1,String Q2,String Q3,String Q4) {
+		try {
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			Statement createStatement = connection.createStatement();
+//			INSERT INTO `assinments` (`id`, `modulename`, `Assignment number`, `Name`, `Q1`, `Q2`, `Q3`, `Q4`) VALUES (NULL, 'oodp', '54', 'n', 'l', 's', 'w', 'a')
+			String sqlQuery = "INSERT INTO `assinments` (`id`, `modulename`, `Assignment number`, `Name`, `Q1`, `Q2`, `Q3`, `Q4`) VALUES "
+					+ "(NULL, '"+modulename+"','"+number+"', '"+name+"', '"+Q1+"', '"+Q2+"', '"+Q3+"', '"+Q4+"')";
+			int resultset = createStatement.executeUpdate(sqlQuery);
+			check(resultset);		
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+	}
 	
 	private static void check(int updateSucess) {
 		if(updateSucess>=1) {

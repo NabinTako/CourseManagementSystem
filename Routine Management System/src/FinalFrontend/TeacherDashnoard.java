@@ -31,6 +31,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import FinalBackend.GetAssignment;
 import FinalBackend.Std_info;
 import FinalBackend.uploadAssignment;
 
@@ -41,6 +42,7 @@ import javax.swing.DefaultComboBoxModel;
 public class TeacherDashnoard {
 	
 	Std_info std_info;
+	GetAssignment see;
 
 	private JFrame frmTeacher;
 	private JPanel panelRight;
@@ -59,11 +61,18 @@ public class TeacherDashnoard {
 				"First Name", "Last Name", "Sex", "Email"
 			}
 		);
-	DefaultTableModel assginmentModel = new DefaultTableModel(
+	DefaultTableModel GiveMarksModel = new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
 				"First name", "Last Name", "level"
+			}
+		);
+	DefaultTableModel viewassginmentModel = new DefaultTableModel(
+			new Object[][] {	
+			},
+			new String[] {
+				"Student Name", "Assignment number"
 			}
 		);
 	private JButton btnAssignment;
@@ -75,6 +84,8 @@ public class TeacherDashnoard {
 	private JTextField Q4textField;
 	
 	private String ModuleSelected;
+	private JTable viewWork;
+	private JButton btnAssignment_1;
 	
 
 	public JFrame getFrame() {
@@ -86,6 +97,7 @@ public class TeacherDashnoard {
 		btnStudent.setBackground(new Color(153,180,209));
 		btnGiveMarks.setBackground(new Color(153,180,209));
 		btnAssignment.setBackground(new Color(153,180,209));
+		btnAssignment_1.setBackground(new Color(153,180,209));
 		if(id.equals("DbBtn")) {
 			btnDashboard.setBackground(new Color(R,G,B));
 		}else if(id.equals("StdBtn")) {
@@ -94,6 +106,8 @@ public class TeacherDashnoard {
 			btnGiveMarks.setBackground(new Color(R,G,B));
 		}else if(id.equals("AssignmentBtn")){
 			btnAssignment.setBackground(new Color(R,G,B));
+		}else if(id.equals("ViewAssignmentBtn")) {
+			btnAssignment_1.setBackground(new Color(R,G,B));
 		}
 	}
 	/**
@@ -227,24 +241,41 @@ public class TeacherDashnoard {
 		Name.setText("<dynamic><dynamic>");
 		Name.setFont(new Font("Arial", Font.ITALIC, 15));
 		
+		btnAssignment_1 = new JButton("View Assignment");
+		btnAssignment_1.setBackground(new Color(153,180,209));
+		btnAssignment_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layouts.show(panelRight, "name_609588501772700");
+				activeBtn(241,241,240,"ViewAssignmentBtn");
+			}
+		});
+		btnAssignment_1.setFont(new Font("Arial", Font.ITALIC, 15));
+		btnAssignment_1.setBorder(new MatteBorder(0, 0, 0, 0, (Color) new Color(0, 0, 0)));
+		btnAssignment_1.setBackground(SystemColor.activeCaption);
+		
 		GroupLayout gl_panelLeft = new GroupLayout(panelLeft);
 		gl_panelLeft.setHorizontalGroup(
-			gl_panelLeft.createParallelGroup(Alignment.LEADING)
+			gl_panelLeft.createParallelGroup(Alignment.TRAILING)
 				.addComponent(btnDashboard, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-				.addComponent(btnLogout, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-				.addComponent(btnGiveMarks, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+				.addComponent(btnGiveMarks, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
 				.addComponent(btnStudent, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
-				.addGroup(gl_panelLeft.createSequentialGroup()
-					.addComponent(btnAssignment, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
 				.addGroup(gl_panelLeft.createSequentialGroup()
 					.addGap(39)
 					.addGroup(gl_panelLeft.createParallelGroup(Alignment.TRAILING)
 						.addComponent(lblWelcome)
 						.addComponent(Icon))
 					.addContainerGap(50, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_panelLeft.createSequentialGroup()
+				.addGroup(gl_panelLeft.createSequentialGroup()
 					.addComponent(Name, GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+					.addContainerGap())
+				.addGroup(Alignment.LEADING, gl_panelLeft.createSequentialGroup()
+					.addComponent(btnLogout, GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+					.addContainerGap())
+				.addGroup(Alignment.LEADING, gl_panelLeft.createSequentialGroup()
+					.addComponent(btnAssignment_1, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+				.addGroup(Alignment.LEADING, gl_panelLeft.createSequentialGroup()
+					.addComponent(btnAssignment, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		gl_panelLeft.setVerticalGroup(
@@ -262,11 +293,13 @@ public class TeacherDashnoard {
 					.addComponent(btnStudent, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
 					.addGap(28)
 					.addComponent(btnGiveMarks, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-					.addGap(30)
+					.addGap(18)
 					.addComponent(btnAssignment, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-					.addGap(49)
+					.addPreferredGap(ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+					.addComponent(btnAssignment_1, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addComponent(btnLogout, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(22, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		panelLeft.setLayout(gl_panelLeft);
 		
@@ -408,8 +441,7 @@ public class TeacherDashnoard {
 		JButton btnNewButton = new JButton("Submit");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new uploadAssignment(ModuleSelected,assignmenttextField.getText(),fullname,Q1textField.getText(),Q2textField.getText(),Q3textField.getText(),Q4textField.getText()
-						,"not needed","not needed","not needed","not needed");
+				new uploadAssignment(ModuleSelected,assignmenttextField.getText(),fullname,Q1textField.getText(),Q2textField.getText(),Q3textField.getText(),Q4textField.getText());
 			}
 		});
 		btnNewButton.setFont(new Font("Arial", Font.ITALIC, 20));
@@ -493,6 +525,7 @@ public class TeacherDashnoard {
 		panelRight.add(Marks, "name_337793314841900");
 		
 		JScrollPane scrollPane_2 = new JScrollPane();
+		
 		GroupLayout gl_Marks = new GroupLayout(Marks);
 		gl_Marks.setHorizontalGroup(
 			gl_Marks.createParallelGroup(Alignment.LEADING)
@@ -510,13 +543,76 @@ public class TeacherDashnoard {
 		);
 		
 		StdInfo = new JTable();
-		StdInfo.setModel(assginmentModel);
+		StdInfo.setDefaultEditor(Object.class, null);
+		StdInfo.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Object[] options= {"GiveMark","back"};
+				int selecterOption=JOptionPane.showOptionDialog(null, "Do you want to Give marks?", "Give marks",
+						JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
+				int rowselected = StdInfo.getSelectedRow();
+				if(selecterOption == 0) {
+				String fname = (String) StdInfo.getValueAt(rowselected, 0);
+				String lname = (String) StdInfo.getValueAt(rowselected, 1);
+				Givemarks window=new Givemarks(fname,lname);
+				window.setVisible(true);
+				
+				}
+			}
+		});
+		StdInfo.setModel(GiveMarksModel);
 		for(int i=0;i<std_info.getSize();i++) {
-		assginmentModel.addRow(new Object[] {std_info.getfirstName(i),std_info.getlastName(i),std_info.getLevel(i)});
+			GiveMarksModel.addRow(new Object[] {std_info.getfirstName(i),std_info.getlastName(i),std_info.getLevel(i)});
 		}
 		StdInfo.setFont(new Font("Arial", Font.ITALIC, 15));
 		scrollPane_2.setViewportView(StdInfo);
 		Marks.setLayout(gl_Marks);
+		
+		JPanel viewAssignments = new JPanel();
+		panelRight.add(viewAssignments, "name_609588501772700");
+		
+		JScrollPane scrollPane_3 = new JScrollPane();
+		GroupLayout gl_viewAssignments = new GroupLayout(viewAssignments);
+		gl_viewAssignments.setHorizontalGroup(
+			gl_viewAssignments.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_viewAssignments.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane_3, GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_viewAssignments.setVerticalGroup(
+			gl_viewAssignments.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_viewAssignments.createSequentialGroup()
+					.addGap(26)
+					.addComponent(scrollPane_3, GroupLayout.PREFERRED_SIZE, 504, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(29, Short.MAX_VALUE))
+		);
+		
+		viewWork = new JTable();
+		viewWork.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Object[] options= {"view","back"};
+				int selecterOption=JOptionPane.showOptionDialog(null, "Do you want to view assignment?", "View?",
+						JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
+				if(selecterOption == 0) {
+				ViewAssignment view = new ViewAssignment();
+				view.setVisible(true);
+				}
+			}
+		});
+		viewWork.setDefaultEditor(Object.class, null);
+		viewWork.setModel(viewassginmentModel);
+		see = new GetAssignment();
+		for(int i=0;i<see.getOodpsize();i++) {
+			viewassginmentModel.addRow(new Object[] {see.getOodpname(i),see.getOodpnumber(i)});
+		}
+		for(int i=0;i<see.getCsize();i++) {
+			viewassginmentModel.addRow(new Object[] {see.getCname(i),see.getCnumber(i)});
+		}
+		viewWork.setFont(new Font("Arial", Font.ITALIC, 16));
+		scrollPane_3.setViewportView(viewWork);
+		viewAssignments.setLayout(gl_viewAssignments);
 		SplitPane.setDividerLocation(150);
 		frmTeacher.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

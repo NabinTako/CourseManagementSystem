@@ -11,10 +11,27 @@ import javax.swing.JOptionPane;
 
 public class UpdateTableInformation {
 	Connection connection;
-	
 	public UpdateTableInformation() {
 		
+		}
+	
+	public UpdateTableInformation(String firstName,String lastname,String OodpMark,String Cmark) {
+	//INSERT INTO `marks` (`id`, `first name`, `last name`, `oodpMark`, `cMark`) VALUES (NULL, 'sudan', '5', '8', '8');	
+		try {
+		 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+		Statement createStatement = connection.createStatement();
+		String sqlQuery = "INSERT INTO `marks` (`id`, `first name`, `last name`, `oodpMark`, `cMark`) VALUES "
+				+ "(NULL, '"+firstName+"', '"+lastname+"', '"+OodpMark+"', '"+Cmark+"')";
+		int updateSuccess = createStatement.executeUpdate(sqlQuery);
+		check(updateSuccess);
+}catch(Exception e) {
+
+	check(0);
+//	e.printStackTrace();
+	
+}
 	}
+	
 	
 // To update teacher informations >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public UpdateTableInformation(String Id,String Username,String Password,String Firstname, String Lastname,String Sex, String Address,String Phonenumber,String type,String ModuleAssigned) {

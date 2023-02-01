@@ -24,6 +24,10 @@ public class GetAssignment {
 	List<String> oodpq2 = new ArrayList<>();
 	List<String> oodpq3 = new ArrayList<>();
 	List<String> oodpq4 = new ArrayList<>();
+	List<String> oodpans1 = new ArrayList<>();
+	List<String> oodpans2 = new ArrayList<>();
+	List<String> oodpans3 = new ArrayList<>();
+	List<String> oodpans4 = new ArrayList<>();
 	
 
 	List<String> cname = new ArrayList<>();
@@ -32,6 +36,10 @@ public class GetAssignment {
 	List<String> cq2 = new ArrayList<>();
 	List<String> cq3 = new ArrayList<>();
 	List<String> cq4 = new ArrayList<>();
+	List<String> cans1 = new ArrayList<>();
+	List<String> cans2 = new ArrayList<>();
+	List<String> cans3 = new ArrayList<>();
+	List<String> cans4 = new ArrayList<>();
 	
 	
 	
@@ -73,6 +81,22 @@ public class GetAssignment {
 	public String getOodpq4(int i) {
 		return oodpq4.get(i);
 	}
+	public String getOodpAns1(int i) {
+		return oodpans1.get(i);
+	}
+	public String getOodpAns2(int i) {
+		return oodpans2.get(i);
+	}
+	public String getOodpAns3(int i) {
+		return oodpans3.get(i);
+	}
+	public String getOodpAns4(int i) {
+		return oodpans4.get(i);
+	}
+	
+	
+	
+	
 	public String getCname(int i) {
 		return cname.get(i);
 	}
@@ -90,6 +114,18 @@ public class GetAssignment {
 	}
 	public String getCq4(int i) {
 		return cq4.get(i);
+	}
+	public String getCAns1(int i) {
+		return cans1.get(i);
+	}
+	public String getCAns2(int i) {
+		return cans2.get(i);
+	}
+	public String getCAns3(int i) {
+		return cans3.get(i);
+	}
+	public String getCAns4(int i) {
+		return cans4.get(i);
 	}
 	
 
@@ -110,12 +146,6 @@ public class GetAssignment {
 			String sqlQuery ="SELECT * FROM `assinments`";
 			ResultSet resultset = createStatement.executeQuery(sqlQuery);
 			while(resultset.next()) {
-				oodpname.add(resultset.getString("Name"));
-				oodpnumber.add(resultset.getString("Assignment Number"));
-				oodpq1.add(resultset.getString("Q1"));
-				oodpq2.add(resultset.getString("Q2"));
-				oodpq3.add(resultset.getString("Q3"));
-				oodpq4.add(resultset.getString("Q4"));
 				modulename.add(resultset.getString("modulename"));
 				name.add(resultset.getString("Name"));
 				number.add(resultset.getString("Assignment Number"));
@@ -125,6 +155,7 @@ public class GetAssignment {
 				q4.add(resultset.getString("Q4"));
 				size++;
 			}
+			GetAssignmentOODP();
 			GetAssignmentC();
 		} catch (SQLException e) {
 
@@ -144,14 +175,34 @@ public class GetAssignment {
 				cq2.add(resultset.getString("Q2"));
 				cq3.add(resultset.getString("Q3"));
 				cq4.add(resultset.getString("Q4"));
-//				modulename.add(resultset.getString("modulename"));
-//				name.add(resultset.getString("Name"));
-//				number.add(resultset.getString("Assignment Number"));
-//				q1.add(resultset.getString("Q1"));
-//				q2.add(resultset.getString("Q2"));
-//				q3.add(resultset.getString("Q3"));
-//				q4.add(resultset.getString("Q4"));
-//				size++;
+				cans1.add(resultset.getString("Ans1"));
+				cans2.add(resultset.getString("Ans2"));
+				cans3.add(resultset.getString("Ans3"));
+				cans4.add(resultset.getString("Ans4"));
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+	}
+	public void GetAssignmentOODP() {
+		try {
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			Statement createStatement = connection.createStatement();
+			String sqlQuery ="SELECT * FROM `oodp`";
+			ResultSet resultset = createStatement.executeQuery(sqlQuery);
+			while(resultset.next()) {
+				oodpname.add(resultset.getString("Name"));
+				oodpnumber.add(resultset.getString("Assignment Number"));
+				oodpq1.add(resultset.getString("Q1"));
+				oodpq2.add(resultset.getString("Q2"));
+				oodpq3.add(resultset.getString("Q3"));
+				oodpq4.add(resultset.getString("Q4"));
+				oodpans1.add(resultset.getString("Ans1"));
+				oodpans2.add(resultset.getString("Ans2"));
+				oodpans3.add(resultset.getString("Ans3"));
+				oodpans4.add(resultset.getString("Ans4"));
+//				System.out.println(2);
 			}
 		} catch (SQLException e) {
 

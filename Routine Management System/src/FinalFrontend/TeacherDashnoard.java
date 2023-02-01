@@ -592,12 +592,25 @@ public class TeacherDashnoard {
 		viewWork.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				int rowselected = viewWork.getSelectedRow();
 				Object[] options= {"view","back"};
 				int selecterOption=JOptionPane.showOptionDialog(null, "Do you want to view assignment?", "View?",
 						JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
 				if(selecterOption == 0) {
-				ViewAssignment view = new ViewAssignment();
-				view.setVisible(true);
+				try {
+				if(see.getOodpnumber(rowselected).equals(viewWork.getValueAt(rowselected, 1)));{
+					ViewAssignment view = new ViewAssignment(see.getOodpname(rowselected),see.getOodpq1(rowselected),see.getOodpq2(rowselected),see.getOodpq3(rowselected),see.getOodpq4(rowselected),
+							see.getOodpAns1(rowselected),see.getOodpAns2(rowselected),see.getOodpAns3(rowselected),see.getOodpAns4(rowselected));
+					System.out.println(see.getOodpname(rowselected));
+					view.setVisible(true);
+				}
+				}catch(Exception error) {
+					int indexForC = rowselected-see.getOodpsize();
+					System.out.println(indexForC);
+					ViewAssignment view = new ViewAssignment(see.getCname(indexForC),see.getCq1(indexForC),see.getCq2(indexForC),see.getCq3(indexForC),see.getCq4(indexForC),
+							see.getCAns1(indexForC),see.getCAns2(indexForC),see.getCAns3(indexForC),see.getCAns4(indexForC));
+					view.setVisible(true);
+				}
 				}
 			}
 		});

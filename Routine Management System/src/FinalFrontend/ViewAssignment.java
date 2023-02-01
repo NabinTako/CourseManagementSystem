@@ -20,7 +20,7 @@ public class ViewAssignment extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			ViewAssignment dialog = new ViewAssignment();
+			ViewAssignment dialog = new ViewAssignment("k","l","m","n","o","p","q","r","s");
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -31,7 +31,9 @@ public class ViewAssignment extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ViewAssignment() {
+//	see.getOodpname(rowselected),see.getOodpq1(rowselected),see.getOodpq2(rowselected),see.getOodpq3(rowselected),see.getOodpq4(rowselected),
+//	see.getOodpAns1(rowselected),see.getOodpAns2(rowselected),see.getOodpAns3(rowselected),see.getOodpAns4(rowselected)
+	public ViewAssignment(String name,String Q1,String Q2,String Q3,String Q4,String Ans1,String Ans2,String Ans3,String Ans4) {
 		setResizable(false);
 		setBounds(100, 100, 572, 422);
 		
@@ -72,14 +74,17 @@ public class ViewAssignment extends JDialog {
 		lblAns_3.setFont(new Font("Arial", Font.ITALIC, 16));
 		
 		JLabel lblDisplayName = new JLabel("Uploaded By:");
+		lblDisplayName.setText(name);
 		lblDisplayName.setBounds(259, 11, 97, 19);
 		lblDisplayName.setFont(new Font("Arial", Font.ITALIC, 16));
 		
 		JLabel lbldisplayQ1 = new JLabel("Uploaded By:");
+		lbldisplayQ1.setText(Q1);
 		lbldisplayQ1.setBounds(254, 64, 292, 19);
 		lbldisplayQ1.setFont(new Font("Arial", Font.ITALIC, 16));
 		
 		JLabel lbldisplayAns1 = new JLabel("Uploaded By:");
+		lbldisplayAns1.setText(Ans1);
 		lbldisplayAns1.setBounds(254, 94, 292, 19);
 		lbldisplayAns1.setFont(new Font("Arial", Font.ITALIC, 16));
 		getContentPane().setLayout(null);
@@ -97,31 +102,37 @@ public class ViewAssignment extends JDialog {
 		getContentPane().add(lblAns_2);
 		
 		JLabel lblDisplayQ2 = new JLabel("Uploaded By:");
+		lblDisplayQ2.setText(Q2);
 		lblDisplayQ2.setFont(new Font("Arial", Font.ITALIC, 16));
 		lblDisplayQ2.setBounds(254, 124, 292, 19);
 		getContentPane().add(lblDisplayQ2);
 		
 		JLabel lblDisplayQ3 = new JLabel("Uploaded By:");
+		lblDisplayQ3.setText(Q3);
 		lblDisplayQ3.setFont(new Font("Arial", Font.ITALIC, 16));
 		lblDisplayQ3.setBounds(254, 184, 292, 19);
 		getContentPane().add(lblDisplayQ3);
 		
 		JLabel lblDisplayQ4 = new JLabel("Uploaded By:");
+		lblDisplayQ4.setText(Q4);
 		lblDisplayQ4.setFont(new Font("Arial", Font.ITALIC, 16));
 		lblDisplayQ4.setBounds(254, 244, 292, 19);
 		getContentPane().add(lblDisplayQ4);
 		
 		JLabel lbldisplayAns2 = new JLabel("Uploaded By:");
+		lbldisplayAns2.setText(Ans2);
 		lbldisplayAns2.setFont(new Font("Arial", Font.ITALIC, 16));
 		lbldisplayAns2.setBounds(254, 154, 292, 19);
 		getContentPane().add(lbldisplayAns2);
 		
 		JLabel lbldisplayAns3 = new JLabel("Uploaded By:");
+		lbldisplayAns3.setText(Ans3);
 		lbldisplayAns3.setFont(new Font("Arial", Font.ITALIC, 16));
 		lbldisplayAns3.setBounds(254, 214, 292, 19);
 		getContentPane().add(lbldisplayAns3);
 		
 		JLabel lbldisplayAns4 = new JLabel("Uploaded By:");
+		lbldisplayAns4.setText(Ans4);
 		lbldisplayAns4.setFont(new Font("Arial", Font.ITALIC, 16));
 		lbldisplayAns4.setBounds(254, 274, 292, 19);
 		getContentPane().add(lbldisplayAns4);

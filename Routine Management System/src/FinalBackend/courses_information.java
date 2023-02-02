@@ -13,11 +13,15 @@ import javax.swing.JOptionPane;
 public class courses_information {
 	List<String> id = new ArrayList<>();
 	List<String> courseName = new ArrayList<>();
+	List<String> courseYear = new ArrayList<>();
 	int dataNum=0;
 
 
 	public String getCourseName(int i) {
 		return courseName.get(i);
+	}
+	public String getId(int i) {
+		return id.get(i);
 	}
 	public String getCourseYear(int i) {
 		return courseYear.get(i);
@@ -25,7 +29,6 @@ public class courses_information {
 	public int getDataNum() {
 		return dataNum;
 	}
-	List<String> courseYear = new ArrayList<>();
 	
 	
 	public courses_information(String Name,String year) {

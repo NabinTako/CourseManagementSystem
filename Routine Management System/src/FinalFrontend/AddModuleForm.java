@@ -89,7 +89,7 @@ public class AddModuleForm extends JDialog {
 	
 	
 
-	/**
+	/*
 	 * Create the dialog.
 	 */
 	public AddModuleForm(String name) {

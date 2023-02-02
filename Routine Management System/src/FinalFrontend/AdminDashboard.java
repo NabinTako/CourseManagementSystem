@@ -354,6 +354,7 @@ private void activeBtn(int R,int G,int B,String a) {
 				int confirmOption=JOptionPane.showOptionDialog(null, "Are you sure u want to delete?", "Confirm",
 						JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,confirm,confirm[0]);
 				if(confirmOption==0) {
+					new DeleteInformations(Integer.parseInt(course_information.getId(CourseTable.getSelectedRow())),course_information.getCourseName(CourseTable.getSelectedRow()));
 					coursemodel.removeRow(CourseTable.getSelectedRow());
 				}
 			}

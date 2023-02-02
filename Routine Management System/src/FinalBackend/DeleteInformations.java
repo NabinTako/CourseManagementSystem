@@ -41,6 +41,31 @@ public class DeleteInformations {
 	}catch(Exception e) {
 
 		check(0);
+		e.printStackTrace();
+	}
+
+	}
+	
+	//"DROP TABLE ` j `"
+	//"DELETE FROM courses WHERE `courses`.`id` = 7"
+	public DeleteInformations(int id,String tableName) {
+
+		try {
+			 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			Statement createStatement = connection.createStatement();
+			String sqlQuery = "DELETE FROM courses WHERE `courses`.`id` = "+id;
+			String sqlQuery2 = "DROP TABLE `"+ tableName +"`";
+			int updateSuccess = createStatement.executeUpdate(sqlQuery);
+			int updateSuccess2 = createStatement.executeUpdate(sqlQuery2);
+			
+			if(updateSuccess>0 && updateSuccess2>0) {
+				check(updateSuccess);
+//			if(updateSuccess2>0) {
+			check(updateSuccess2);
+			}
+	}catch(Exception e) {
+
+		check(0);
 		
 	}
 

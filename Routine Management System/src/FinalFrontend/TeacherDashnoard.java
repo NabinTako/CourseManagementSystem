@@ -616,7 +616,7 @@ public class TeacherDashnoard {
 		});
 		viewWork.setDefaultEditor(Object.class, null);
 		viewWork.setModel(viewassginmentModel);
-		see = new GetAssignment();
+		see = new GetAssignment(false);
 		for(int i=0;i<see.getOodpsize();i++) {
 			viewassginmentModel.addRow(new Object[] {see.getOodpname(i),see.getOodpnumber(i)});
 		}

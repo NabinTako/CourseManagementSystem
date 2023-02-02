@@ -273,11 +273,11 @@ public class studentDashboard {
 		btnResult.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				result = new Getresult();
-				result.seeResult(firstname);
+				result.seeResult(firstname.trim());
 				int i = result.getIndex();
 				cl_cardPanel.show(panel, "name_547851383737699");
-				displayCmarks.setText(result.getOODPmark(i));
-				displayOODPmarks.setText(result.getCmark(i));
+				displayCmarks.setText(result.getCmark(i));
+				displayOODPmarks.setText(result.getOODPmark(i));
 				
 			}
 		});
@@ -383,7 +383,7 @@ public class studentDashboard {
 			}
 		});
 		oodptable.setModel(oodpModle);
-		getworks = new GetAssignment();
+		getworks = new GetAssignment(true);
 		for(int i=0;i<getworks.getSize();i++) {
 			if(getworks.getModulename(i).equalsIgnoreCase("oodp")) {
 			oodpModle.addRow(new Object[] {getworks.getName(i),getworks.getQ1(i),getworks.getQ2(i),getworks.getQ3(i),getworks.getQ4(i)});
@@ -671,8 +671,8 @@ public class studentDashboard {
 			int i=oodptable.getSelectedRow();
 			AssignmentPannel Panel = new AssignmentPannel(module,fullname,getworks.getOodpname(i),getworks.getOodpnumber(i),getworks.getOodpq1(i),getworks.getOodpq2(i),getworks.getOodpq3(i),getworks.getOodpq4(i));
 			Panel.setVisible(true);
-			JButton btnNewButton = Panel.getBtnNewButton();
-			btnNewButton.addActionListener(new ActionListener() {
+			JButton btnSubmit = Panel.getBtnNewButton();
+			btnSubmit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Panel.dispose();
 					}});
@@ -680,6 +680,11 @@ public class studentDashboard {
 			int i=Ctable.getSelectedRow();
 			AssignmentPannel Panel = new AssignmentPannel(module,fullname,getworks.getCname(i),getworks.getCnumber(i),getworks.getCq1(i),getworks.getCq2(i),getworks.getCq3(i),getworks.getCq4(i));
 			Panel.setVisible(true);
+			JButton btnSubmit = Panel.getBtnNewButton();
+			btnSubmit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Panel.dispose();
+					}});
 		}
 	}
 }

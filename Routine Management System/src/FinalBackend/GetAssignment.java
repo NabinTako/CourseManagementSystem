@@ -139,7 +139,7 @@ public class GetAssignment {
 	public int getCsize() {
 		return cname.size();
 	}
-	public GetAssignment() {
+	public GetAssignment(boolean isStudent) {
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
 			Statement createStatement = connection.createStatement();
@@ -153,15 +153,37 @@ public class GetAssignment {
 				q2.add(resultset.getString("Q2"));
 				q3.add(resultset.getString("Q3"));
 				q4.add(resultset.getString("Q4"));
+				if(isStudent==true) {
+				if(modulename.get(size).equals("oodp")){
+				oodpname.add(resultset.getString("Name"));
+				oodpnumber.add(resultset.getString("Assignment Number"));
+				oodpq1.add(resultset.getString("Q1"));
+				oodpq2.add(resultset.getString("Q2"));
+				oodpq3.add(resultset.getString("Q3"));
+				oodpq4.add(resultset.getString("Q4"));
+				}else {
+				cname.add(resultset.getString("Name"));
+				cnumber.add(resultset.getString("Assignment Number"));
+				cq1.add(resultset.getString("Q1"));
+				cq2.add(resultset.getString("Q2"));
+				cq3.add(resultset.getString("Q3"));
+				cq4.add(resultset.getString("Q4"));
+				}
+				}
 				size++;
 			}
-			GetAssignmentOODP();
-			GetAssignmentC();
+			if(isStudent==false) {
+				GetAssignmentOODP();
+				GetAssignmentC();
+				
+			}
+				
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
 	}
+	
 	public void GetAssignmentC() {
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
@@ -191,6 +213,7 @@ public class GetAssignment {
 			Statement createStatement = connection.createStatement();
 			String sqlQuery ="SELECT * FROM `oodp`";
 			ResultSet resultset = createStatement.executeQuery(sqlQuery);
+			int i=0;
 			while(resultset.next()) {
 				oodpname.add(resultset.getString("Name"));
 				oodpnumber.add(resultset.getString("Assignment Number"));
@@ -202,12 +225,13 @@ public class GetAssignment {
 				oodpans2.add(resultset.getString("Ans2"));
 				oodpans3.add(resultset.getString("Ans3"));
 				oodpans4.add(resultset.getString("Ans4"));
-//				System.out.println(2);
+				System.out.println(oodpname.get(i));
+				i++;
 			}
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
-	}
+	} 
 
 }

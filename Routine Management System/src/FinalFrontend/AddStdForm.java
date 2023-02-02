@@ -30,7 +30,7 @@ import javax.swing.UIManager;
 public class AddStdForm extends JDialog {
 	
 	
-	private String levelSelected;
+	private String levelSelected1;
 	
 	
 	private JTextField UsernametextField;

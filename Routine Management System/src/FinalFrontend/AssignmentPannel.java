@@ -142,7 +142,7 @@ public class AssignmentPannel extends JDialog {
 //				System.out.println(Ans2);
 //				System.out.println(Ans3);
 //				System.out.println(Ans4);
-//				new uploadAssignment(modulename,number,name,q1,q2,q3,q4,Ans1,Ans2,Ans3,Ans4);
+				new uploadAssignment(modulename,number,name,q1,q2,q3,q4,Ans1,Ans2,Ans3,Ans4);
 			}
 		});
 		btnNewButton.setBounds(197, 313, 179, 39);

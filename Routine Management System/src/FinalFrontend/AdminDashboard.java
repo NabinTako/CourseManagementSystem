@@ -472,9 +472,8 @@ private void activeBtn(int R,int G,int B,String a) {
 							for(int i=1;i<TeacherTable.getColumnCount();i++) {
 								String info = informations.get(i);
 								TeacherTable.setValueAt(info, selectedRow, i);
-								form.dispose();
-								
 						}
+							form.dispose();	
 						}});
 					
 					// To update the database infos>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -536,7 +535,7 @@ private void activeBtn(int R,int G,int B,String a) {
 		JButton btnAddStd = new JButton("Add Student");
 		btnAddStd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddStdForm stdForm = new AddStdForm();
+				 stdForm = new AddStdForm();
 				stdForm.setVisible(true);
 				JButton btnSubmit = stdForm.getBtnSubmit();
 				btnSubmit.addMouseListener(new MouseAdapter() {
@@ -549,8 +548,8 @@ private void activeBtn(int R,int G,int B,String a) {
 								,Sex,stdForm.getAddresstextField().getText().trim(),stdForm.getEmailtextField().getText().trim(),level);
 					}
 		});
-				JComboBox levelSelected = stdForm.getLevelSelected();
-				levelSelected.addItemListener(new ItemListener() {
+//				JComboBox levelSelected = stdForm1.getLevelSelected();
+				stdForm.getLevelSelected().addItemListener(new ItemListener() {
 					public void itemStateChanged(ItemEvent e) {
 						if(e.getStateChange() == 1) {
 							level = (String) e.getItem();
@@ -592,6 +591,7 @@ private void activeBtn(int R,int G,int B,String a) {
 				int selecterOption=JOptionPane.showOptionDialog(null, "Do you want to update or delete?", "Update or delete Student",
 						JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
 				if(selecterOption==0) {
+					ArrayList<String> informations = new ArrayList<>();
 					 stdForm = new AddStdForm();
 					 stdForm.setVisible(true);
 					 String id =student_information.getId(selectedRow);
@@ -602,6 +602,14 @@ private void activeBtn(int R,int G,int B,String a) {
 					 stdForm.getPhonenumtextField().setText(student_information.getPhoneNumber(selectedRow));
 					 stdForm.getAddresstextField().setText(student_information.getAddress(selectedRow));
 					 stdForm.getEmailtextField().setText(student_information.getEmail(selectedRow));
+					 stdForm.getLevelSelected().addItemListener(new ItemListener() {
+							public void itemStateChanged(ItemEvent e) {
+								if(e.getStateChange() == 1) {
+									level = (String) e.getItem();
+									System.out.println(level);
+								}
+							}
+						});
 					JButton btnSubmit = stdForm.getBtnSubmit();
 					btnSubmit.addMouseListener(new MouseAdapter() {
 						@Override
@@ -611,7 +619,20 @@ private void activeBtn(int R,int G,int B,String a) {
 							new UpdateTableInformation(id,stdForm.getUsernametextField().getText().trim(),stdForm.getPasswordtextField().getText().trim(), stdForm.getFirstnametextField().getText().trim(),
 									 stdForm.getLastnametextField().getText().trim(), stdForm.getPhonenumtextField().getText(),Sex.trim(),stdForm.getAddresstextField().getText().trim(),
 									 stdForm.getEmailtextField().getText().trim(),level,"k");
-							stdForm.dispose();
+//							student_information.getfirstName(i),student_information.getlastName(i),student_information.getSex(i),student_information.getPhoneNumber(i),
+//							student_information.getAddress(i),student_information.getLevel(i)?
+							informations.add(stdForm.getFirstnametextField().getText().trim());
+							informations.add(stdForm.getLastnametextField().getText().trim());
+							informations.add(Sex.trim());
+							informations.add(stdForm.getPhonenumtextField().getText());
+							informations.add(stdForm.getAddresstextField().getText());
+							informations.add(level);
+							 for(int i=1;i<stdTable.getColumnCount();i++) {
+									String info = informations.get(i);
+									StdModal.setValueAt(info, selectedRow, i);
+									
+							}
+									 stdForm.dispose();
 						        }});
 						
 				}else if(selecterOption == 1) {

@@ -149,6 +149,7 @@ public class Login {
 			}
 		});
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		// user modes>>>
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Select User", "Admin", "Teacher", "Student"}));
 		comboBox.setSelectedIndex(0);
 		frame.getContentPane().add(comboBox);
@@ -158,13 +159,13 @@ public class Login {
 		springLayout.putConstraint(SpringLayout.SOUTH, btnNewButton, -10, SpringLayout.SOUTH, frame.getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, btnNewButton, -108, SpringLayout.EAST, frame.getContentPane());
 		btnNewButton.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.GRAY, Color.GRAY, Color.WHITE, Color.WHITE));
-		btnNewButton.addActionListener(new ActionListener() {
+		btnNewButton.addActionListener(new ActionListener() { // action listener to execute login codes
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-						
+						// if the user mode is student, only this code is executed
 					if(valueFromComboBox.equals("Student")) {
-						for(int i=0;i<std_info.getSize();i++) {
+						for(int i=0;i<std_info.getSize();i++) { // a loop to check every values and check if hte y are right or wrong, if right login, if not dont
 				if(userNameTextField.getText().equals(std_info.getUserName(i)) && String.valueOf(passwordField.getPassword()).equals(std_info.getPassWord(i)) && valueFromComboBox.equals("Student")) {
 					studentDashboard window = new studentDashboard(std_info.getfirstName(i),std_info.getlastName(i));
 					window.getFrame().setVisible(true);
@@ -180,6 +181,7 @@ public class Login {
 					lblNewLabel_5.setVisible(true);
 					size +=1;
 				}}
+					// if the user mode is Admin, only this code is executed
 				}else if(valueFromComboBox.equals("Admin")) {
 					for(int i=0;i<adminInfo.getDtaNumber();i++) {
 				if(userNameTextField.getText().equals(adminInfo.getUserName(i)) && String.valueOf(passwordField.getPassword()).equals(adminInfo.getPassWord(i)) && valueFromComboBox.equals("Admin")) {
@@ -198,6 +200,7 @@ public class Login {
 					size +=1;
 					
 				} }
+					// if the user mode is Teacher, only this code is executed
 				}else if(valueFromComboBox.equals("Teacher")) {
 					for(int i=0;i<teacher_info.getSize();i++) {
 					if(userNameTextField.getText().equalsIgnoreCase(teacher_info.getUserName(i)) && String.valueOf(passwordField.getPassword()).equals(teacher_info.getPassWord(i)) && valueFromComboBox.equals("Teacher")) {
@@ -206,7 +209,7 @@ public class Login {
 						frame.dispose();
 					} else if(!userNameTextField.getText().equals(teacher_info.getUserName(i)) || !String.valueOf(passwordField.getPassword()).equals(teacher_info.getPassWord(i))){
 						ErroeLabel.setFont(new Font("Arial", Font.BOLD, size));
-						ErroeLabel.setVisible(true);
+						ErroeLabel.setVisible(true); // displaying error message if the login credentials are wrong
 						lblNewLabel_5.setVisible(false);
 						size+=1;
 					}else if (userNameTextField.getText().equals(teacher_info.getUserName(i)) && String.valueOf(passwordField.getPassword()).equals(teacher_info.getPassWord(i)) && !valueFromComboBox.equals("Teacher")) {

@@ -617,7 +617,8 @@ public class studentDashboard {
 		JLabel lblNewLabel_3 = new JLabel("Your Assignments:");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setFont(new Font("Arial", Font.ITALIC, 20));
-		
+		String totalAssinment = String.valueOf(oodpModle.getRowCount()+cModle.getRowCount());
+		lblNewLabel_3.setText("<html><br>\r\n\r\n you have<br>\r\n"+totalAssinment+" Assinments </html>");
 		JLabel Name = new JLabel("name");
 		Name.setText(fullname);
 		Name.setHorizontalAlignment(SwingConstants.CENTER);

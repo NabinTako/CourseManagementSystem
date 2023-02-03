@@ -48,6 +48,7 @@ public class DeleteInformations {
 	
 	//"DROP TABLE ` j `"
 	//"DELETE FROM courses WHERE `courses`.`id` = 7"
+	// to drop the course table
 	public DeleteInformations(int id,String tableName) {
 
 		try {

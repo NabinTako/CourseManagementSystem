@@ -59,7 +59,7 @@ public class course_info {
 	public course_info(String name) {
 			try {
 				name =name.toLowerCase();
-				Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+				Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 				Statement createStatement = connection.createStatement();
 				String sqlQuery = "SELECT * FROM "+name;
 				ResultSet resultset = createStatement.executeQuery(sqlQuery);

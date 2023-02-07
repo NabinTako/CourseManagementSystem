@@ -141,7 +141,7 @@ public class GetAssignment {
 	}
 	public GetAssignment(boolean isStudent) {
 		try {
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 			Statement createStatement = connection.createStatement();
 			String sqlQuery ="SELECT * FROM `assinments`";
 			ResultSet resultset = createStatement.executeQuery(sqlQuery);
@@ -186,7 +186,7 @@ public class GetAssignment {
 	
 	public void GetAssignmentC() {
 		try {
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 			Statement createStatement = connection.createStatement();
 			String sqlQuery ="SELECT * FROM `c`";
 			ResultSet resultset = createStatement.executeQuery(sqlQuery);
@@ -209,7 +209,7 @@ public class GetAssignment {
 	}
 	public void GetAssignmentOODP() {
 		try {
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 			Statement createStatement = connection.createStatement();
 			String sqlQuery ="SELECT * FROM `oodp`";
 			ResultSet resultset = createStatement.executeQuery(sqlQuery);

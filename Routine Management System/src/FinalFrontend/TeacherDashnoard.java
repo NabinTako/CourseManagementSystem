@@ -238,7 +238,7 @@ public class TeacherDashnoard {
 		btnGiveMarks.setBackground(new Color(153,180,209));
 		
 		JLabel Name = new JLabel("Welcome");
-		Name.setText("                  "+fullname);
+		Name.setText("          "+fullname);
 		Name.setFont(new Font("Arial", Font.ITALIC, 15));
 		
 		btnAssignment_1 = new JButton("View Assignment");

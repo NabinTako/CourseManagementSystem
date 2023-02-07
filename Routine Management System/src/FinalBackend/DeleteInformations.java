@@ -14,7 +14,7 @@ public class DeleteInformations {
 	public DeleteInformations(String mobileNumber) {
 
 		try {
-			 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			 connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 			Statement createStatement = connection.createStatement();
 			String sqlQuery = "DELETE FROM `teacher_info` WHERE `teacher_info`.`phoneNumber` = '"+mobileNumber+"'";
 			int updateSuccess = createStatement.executeUpdate(sqlQuery);
@@ -32,7 +32,7 @@ public class DeleteInformations {
 	public DeleteInformations(String id,String mobileNumber) {
 
 		try {
-			 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			 connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 			Statement createStatement = connection.createStatement();
 			String sqlQuery = "DELETE FROM `student_info` WHERE `student_info`.`Phone Number` = '"+mobileNumber+"'";
 			int updateSuccess = createStatement.executeUpdate(sqlQuery);
@@ -52,7 +52,7 @@ public class DeleteInformations {
 	public DeleteInformations(int id,String tableName) {
 
 		try {
-			 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			 connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 			Statement createStatement = connection.createStatement();
 			String sqlQuery = "DELETE FROM courses WHERE `courses`.`id` = "+id;
 			String sqlQuery2 = "DROP TABLE `"+ tableName +"`";

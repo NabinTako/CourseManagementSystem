@@ -1,4 +1,4 @@
-package FinalFrontend;
+package frontEnd;
 
 import java.awt.EventQueue;
 
@@ -35,6 +35,9 @@ import FinalBackend.GetAssignment;
 import FinalBackend.Getresult;
 import FinalBackend.Std_info;
 import FinalBackend.Teacher_info;
+import FinalFrontend.AssignmentPannel;
+import FinalFrontend.Login;
+
 import javax.swing.JComboBox;
 
 public class studentDashboard {
@@ -279,7 +282,7 @@ public class studentDashboard {
 				cl_cardPanel.show(panel, "name_547851383737699");
 				displayCmarks.setText(result.getCmark(i));
 				displayOODPmarks.setText(result.getOODPmark(i));
-				lblDisplayPercentage.setText(result.getPercentage(i));
+				
 			}
 		});
 		btnResult.setFont(new Font("Arial", Font.ITALIC, 15));
@@ -560,6 +563,7 @@ public class studentDashboard {
 		
 		displayCmarks = new JLabel("C");
 		displayCmarks.setFont(new Font("Arial", Font.ITALIC, 20));
+		
 		JLabel lblPercentage = new JLabel("C");
 		lblPercentage.setFont(new Font("Arial", Font.ITALIC, 20));
 		

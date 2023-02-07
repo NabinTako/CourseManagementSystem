@@ -66,7 +66,7 @@ public class Std_info {
 
 		public Std_info() {
 				try {
-					Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+					Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 					Statement createStatement = connection.createStatement();
 					String sqlQuery = "SELECT * FROM `student_info`";	
 					ResultSet resultset = createStatement.executeQuery(sqlQuery);

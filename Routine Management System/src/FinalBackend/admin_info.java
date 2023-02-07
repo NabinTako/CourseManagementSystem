@@ -29,7 +29,7 @@ public class admin_info {
 
 	public admin_info() {
 			try {
-				Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+				Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 				Statement createStatement = connection.createStatement();
 				String sqlQuery = "SELECT * FROM `admin_info`";
 				ResultSet resultset = createStatement.executeQuery(sqlQuery);

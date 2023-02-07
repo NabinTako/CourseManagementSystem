@@ -1,4 +1,4 @@
-package FinalFrontend;
+package frontEnd;
 
 import java.awt.EventQueue;
 
@@ -41,7 +41,12 @@ import FinalBackend.Std_info;
 import FinalBackend.Teacher_info;
 import FinalBackend.UpdateTableInformation;
 import FinalBackend.courses_information;
-import FinalBackend.getMarks;
+import FinalFrontend.AddStdForm;
+import FinalFrontend.AddTeacherForm;
+import FinalFrontend.CourseInfo;
+import FinalFrontend.Login;
+import FinalFrontend.addCourse;
+import FinalFrontend.studentDashboard;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -58,7 +63,6 @@ public class AdminDashboard {
 	courses_information course_information;
 	Std_info student_information;
 	AddStdForm stdForm;
-	getMarks getMark;
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -75,7 +79,7 @@ public class AdminDashboard {
 	private JButton btnResult;
 	private JTable TeacherTable;
 	private JTable stdTable;
-	private JTable resultTable;
+	
 
 	private String Sex;
 	private String Type;
@@ -108,13 +112,7 @@ public class AdminDashboard {
 		"Course name", "Course Year"
 	}
 );
-	private DefaultTableModel resultmodel =new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Student Name", "OODP Mark", "C Mark"
-			}
-		);
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -248,7 +246,6 @@ private void activeBtn(int R,int G,int B,String a) {
 				activeBtn(255, 235, 205,"ResultBtn");
 			}
 		});
-		
 		btnResult.setFont(new Font("Arial", Font.ITALIC, 17));
 		btnResult.setBorder(new MatteBorder(0, 0, 0, 0, (Color) new Color(0, 0, 0)));
 		btnResult.setBackground(SystemColor.activeCaption);
@@ -671,6 +668,8 @@ private void activeBtn(int R,int G,int B,String a) {
 		StdPanel.setLayout(gl_StdPanel);
 		
 		JPanel ResultPanel = new JPanel();
+		panel_right.add(ResultPanel, "name_173602901088000");
+		
 		JScrollPane scrollPane_3 = new JScrollPane();
 		GroupLayout gl_ResultPanel = new GroupLayout(ResultPanel);
 		gl_ResultPanel.setHorizontalGroup(
@@ -688,50 +687,16 @@ private void activeBtn(int R,int G,int B,String a) {
 					.addContainerGap(98, Short.MAX_VALUE))
 		);
 		
-		resultTable = new JTable();
-		resultTable.setModel(resultmodel);
-		
-		resultTable.setDefaultEditor(Object.class, null);
-		scrollPane_3.setViewportView(resultTable);
-		getMark = new getMarks();
-		for(int i=1;i<getMark.getSize();i++) {
-			resultmodel.addRow(new Object[] {
-					getMark.getFirstName(i) + " "+getMark.getLastName(i),
-					getMark.getOODPmark(i),
-					getMark.getCmark(i)
-			});
-		}
-		resultTable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				Object[] comfirm= {"View","Back"};
-				int confirm=JOptionPane.showOptionDialog(null, "View Given Marks? ", "Confirm",
-						JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,comfirm,comfirm[0]);
-				if(confirm ==0) {
-					int i = resultTable.getSelectedRow();
-					viewMarks seeMark = new viewMarks(getMark.getFirstName(i+1),getMark.getLastName(i+1),getMark.getOODPmark(i+1),getMark.getCmark(i+1));
-					seeMark.setVisible(true);
-					JButton btnGenerate = seeMark.getBtnGenerate();
-					btnGenerate.addMouseListener(new MouseAdapter() {
-						@Override
-						public void mouseClicked(MouseEvent e) {
-							int i=resultTable.getSelectedRow();
-							String id = getMark.getId(i+1);
-							String fname = seeMark.getLblDisplayFirstName().getText();
-							String lname = seeMark.getLblDisplayLastName().getText().trim();
-							String oodpMark = seeMark.getLblDisplayoodpmark().getText().trim();
-							String CMark= seeMark.getLblDisplayCmark().getText().trim();
-							String percentage= seeMark.getLblDisplayPercentage().getText().trim();
-							System.out.println(id);
-							new UpdateTableInformation(id,fname,lname,oodpMark,CMark,percentage);
-						}
-						});
-				}
-				
-				
-			}});
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"New column", "New column", "New column"
+			}
+		));
+		scrollPane_3.setViewportView(table);
 		ResultPanel.setLayout(gl_ResultPanel);
-		panel_right.add(ResultPanel, "name_173602901088000");
 		SplitPane.setDividerLocation(160);
 	}
 	

@@ -37,7 +37,7 @@ public class courses_information {
 //		//INSERT INTO `courses` (`id`, `courseName`, `courseYear`) VALUES (NULL, 'bit', '3'), (NULL, 'bibm', '3');
 //	
 	try {
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 		Statement createStatement = connection.createStatement();
 		String sqlQuery = "INSERT INTO `courses` (`id`, `courseName`, `courseYear`) VALUES (NULL,'"+Name+"', '"+year+"')";
 		int updateSuccess = createStatement.executeUpdate(sqlQuery);
@@ -52,7 +52,7 @@ public class courses_information {
 	public courses_information() {
 
 		try {
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 			Statement createStatement = connection.createStatement();
 			String sqlQuery = "SELECT * FROM `courses`";
 			ResultSet resultset = createStatement.executeQuery(sqlQuery);

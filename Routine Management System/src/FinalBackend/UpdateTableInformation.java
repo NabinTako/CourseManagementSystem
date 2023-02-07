@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
 
 public class UpdateTableInformation {
 	Connection connection;
+	
+	// stores marks given by the teacher.
 	public UpdateTableInformation() {
 		
 		}
@@ -18,7 +20,7 @@ public class UpdateTableInformation {
 	public UpdateTableInformation(String firstName,String lastname,String OodpMark,String Cmark) {
 	//INSERT INTO `marks` (`id`, `first name`, `last name`, `oodpMark`, `cMark`) VALUES (NULL, 'sudan', '5', '8', '8');	
 		try {
-		 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+		 connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 		Statement createStatement = connection.createStatement();
 		String sqlQuery = "INSERT INTO `marks` (`id`, `first name`, `last name`, `oodpMark`, `cMark`) VALUES "
 				+ "(NULL, '"+firstName+"', '"+lastname+"', '"+OodpMark+"', '"+Cmark+"')";
@@ -32,6 +34,25 @@ public class UpdateTableInformation {
 }
 	}
 	
+	// TO store the student report.
+	public UpdateTableInformation(String id,String firstName,String lastname,String OodpMark,String Cmark,String percentage) {
+		//INSERT INTO `marks` (`id`, `first name`, `last name`, `oodpMark`, `cMark`) VALUES (NULL, 'sudan', '5', '8', '8');	
+			try {
+			 connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
+			Statement createStatement = connection.createStatement();
+			String sqlQuery = "INSERT INTO `report` (`id`, `first name`, `last name`, `oodpMark`, `cMark`, `Percentage`) "
+					+ "VALUES ("+id+", '"+firstName+"', '"+lastname+"', '"+OodpMark+"', '"+Cmark+"', '"+percentage+"')";
+			String sqlQuery2="DELETE FROM `marks` WHERE `marks`.`id` = "+id;
+			int updateSuccess = createStatement.executeUpdate(sqlQuery);
+			int updateSuccess2 = createStatement.executeUpdate(sqlQuery2);
+			check(updateSuccess);
+	}catch(Exception e) {
+
+		check(0);
+		e.printStackTrace();
+		
+	}
+		}
 	
 // To update teacher informations >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	public UpdateTableInformation(String Id,String Username,String Password,String Firstname, String Lastname,String Sex, String Address,String Phonenumber,String type,String ModuleAssigned) {
@@ -39,7 +60,7 @@ public class UpdateTableInformation {
 //		`Last name` = 'justBones4', `Address` = 'thousand sunny5', `phoneNumber` = '98564255306', `type` = 'Full-Time7' WHERE `teacher_info`.`id` = 1";
 
 		try {
-			 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			 connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 			Statement createStatement = connection.createStatement();
 			String sqlQuery = "UPDATE `teacher_info` SET `userName`= '"+Username+"', `passWord`= '"+ Password +"',`First name` = '"+ Firstname+"',`Last name` = '"+ Lastname +"',`Sex` = '"+Sex+"', `Address` = '"+ Address 
 					+"', `phoneNumber` = '"+ Phonenumber +"', `type` = '"+ type+"', `Module` = '"+ModuleAssigned +"' WHERE `teacher_info`.`id` = "+Id;
@@ -60,7 +81,7 @@ public class UpdateTableInformation {
 	
 //			Connection connection;
 			try {
-				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+				connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 			
 			Statement createStatement = connection.createStatement();
 			String sqlQuery = "INSERT INTO `teacher_info` (`id`, `userName`, `passWord`, `First name`, `Last name`, `Sex` ,`Address`, `phoneNumber`, `type`,`Module`)"+
@@ -85,7 +106,7 @@ public class UpdateTableInformation {
 		
 		
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 		
 		Statement createStatement = connection.createStatement();
 		String sqlQuery ="CREATE TABLE `datas`.`"+Name+"` (`id` INT NOT NULL AUTO_INCREMENT , `Module Name` VARCHAR(150) NOT NULL , `Module Number` VARCHAR(150) NOT NULL , `Semester` VARCHAR(30) NOT NULL , "
@@ -108,7 +129,7 @@ public UpdateTableInformation(String TableName,String moduleName,String moduleNu
 		
 		
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 		
 		Statement createStatement = connection.createStatement();
 		String sqlQuery ="INSERT INTO `"+ TableName +"` (`id`, `Module Name`, `Module Number`, `Semester`, `Level`, `Credit`, `type`)"
@@ -131,7 +152,7 @@ public UpdateTableInformation(String id,String TableName,String moduleName,Strin
 	
 	
 	try {
-		connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+		connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 	
 	Statement createStatement = connection.createStatement();
 //	UPDATE `d` SET `Module Name` = 's as', `Module Number` = 'ss', `Semester` = 'nulls', `Level` = 'nulls', `Credit` = 's', `type` = 'nulls' WHERE `d`.`id` = 3
@@ -151,7 +172,7 @@ public UpdateTableInformation(String id,String TableName,String moduleName,Strin
 public UpdateTableInformation(int id,String Username,String Password,String Firstname, String Lastname,String Phonenumber,String Sex, String Address,String email,String level) {
 //INSERT INTO `student_info` (`id`, `userName`, `passWord`, `First name`, `Last name`, `Phone number`, `sex`, `address`, `email`, `level`) VALUES (NULL, 'na', 'mi', 'jdsakl', 'shdkja', 'asd', 'hdsakj', 'hsajkdhak', 'sdahkjdh', 'dskjahdkaj')
 	try {
-		connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+		connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 	
 	Statement createStatement = connection.createStatement();
 //	UPDATE `d` SET `Module Name` = 's as', `Module Number` = 'ss', `Semester` = 'nulls', `Level` = 'nulls', `Credit` = 's', `type` = 'nulls' WHERE `d`.`id` = 3
@@ -172,7 +193,7 @@ public UpdateTableInformation(int id,String Username,String Password,String Firs
 //UPDATE `student_info` SET `userName` = 'nas', `passWord` = 'mid', `First name` = 'jdsakl2', `Last name` = 'shdkjad', `Phone number` = 'asds', `sex` = 'hdsakjs', `address` = 'hsajkdhaks', `email` = 'sdahkjdhs', `level` = 'dskjahdkajs' WHERE `student_info`.`id` = 2
 public UpdateTableInformation(String id,String Username,String Password,String Firstname, String Lastname,String Phonenumber,String Sex, String Address,String email,String level,String l) {
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 		
 		Statement createStatement = connection.createStatement();
 //		UPDATE `d` SET `Module Name` = 's as', `Module Number` = 'ss', `Semester` = 'nulls', `Level` = 'nulls', `Credit` = 's', `type` = 'nulls' WHERE `d`.`id` = 3

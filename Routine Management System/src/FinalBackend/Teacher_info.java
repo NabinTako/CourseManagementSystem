@@ -67,7 +67,7 @@ public class Teacher_info {
 	public Teacher_info() {
 			try {
 				String[] columnNames= {"userName","passWord"};
-				Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/datas", "root", "");
+				Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 				Statement createStatement = connection.createStatement();
 				String sqlQuery = "SELECT * FROM `teacher_info`";
 				ResultSet resultset = createStatement.executeQuery(sqlQuery);

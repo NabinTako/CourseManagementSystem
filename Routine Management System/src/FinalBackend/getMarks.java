@@ -8,14 +8,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Getresult {
-	List<String> name = new ArrayList<>();
+public class getMarks {
+	List<String> id = new ArrayList<>();
+	List<String> FirstName = new ArrayList<>();
+	List<String> LastName = new ArrayList<>();
 	List<String> OODPmark = new ArrayList<>();
 	List<String> Cmark = new ArrayList<>();
-	List<String> percentage = new ArrayList<>();
-	int index=0;
-	public int getIndex() {
-		return index;
+	
+	public String getId(int i) {
+		return id.get(i);
+	}
+	public String getFirstName(int i) {
+		return FirstName.get(i);
+	}
+	public String getLastName(int i) {
+		return LastName.get(i);
 	}
 	public String getOODPmark(int i) {
 		return OODPmark.get(i);
@@ -24,23 +31,24 @@ public class Getresult {
 	public String getCmark(int i) {
 		return Cmark.get(i);
 	}
-	public String getPercentage(int i) {
-		return percentage.get(i);
-	}
-	int size;
 
-	public Getresult() {
+	public int getSize() {
+		return Cmark.size();
+	}
+
+	public getMarks() {
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
 			Statement createStatement = connection.createStatement();
-			String sqlQuery ="SELECT * FROM `report`";
+			String sqlQuery ="SELECT * FROM `marks`";
 			ResultSet resultset = createStatement.executeQuery(sqlQuery);
 			while(resultset.next()) {
-				name.add(resultset.getString("first name"));
+				id.add(resultset.getString("id"));
+				FirstName.add(resultset.getString("first name"));
+				LastName.add(resultset.getString("last name"));
 				OODPmark.add(resultset.getString("oodpMark"));
 				Cmark.add(resultset.getString("cMark"));
-				percentage.add(resultset.getString("Percentage"));
-				size++;
+				
 			}
 		} catch (SQLException e) {
 
@@ -48,16 +56,4 @@ public class Getresult {
 		}
 	}
 	
-	public void seeResult(String firstname) {
-		for(int i=0;i<size;i++) {
-			if(name.get(i).trim().equals(firstname)) {
-				index =i;
-			}else {
-				
-			}
-		}
-	}
-	
-	
-
 }

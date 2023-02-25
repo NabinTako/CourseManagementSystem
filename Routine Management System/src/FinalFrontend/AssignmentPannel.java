@@ -131,17 +131,6 @@ public class AssignmentPannel extends JDialog {
 				String Ans2=Ans2textField.getText().trim();
 				String Ans3=Ans3textField.getText().trim();
 				String Ans4=Ans4textField.getText().trim();
-//				System.out.println(modulename);
-//				System.out.println(number);
-//				System.out.println(name);
-//				System.out.println(q1);
-//				System.out.println(q2);
-//				System.out.println(q3);
-//				System.out.println(q4);
-//				System.out.println(Ans1);
-//				System.out.println(Ans2);
-//				System.out.println(Ans3);
-//				System.out.println(Ans4);
 				new uploadAssignment(modulename,number,name,q1,q2,q3,q4,Ans1,Ans2,Ans3,Ans4);
 			}
 		});

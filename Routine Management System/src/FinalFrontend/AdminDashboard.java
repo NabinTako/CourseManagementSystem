@@ -448,7 +448,7 @@ private void activeBtn(int R,int G,int B,String a) {
 		TeacherTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println(TeacherTable.getSelectedRow());
+//				System.out.println(TeacherTable.getSelectedRow());
 				Object[] options= {"Update","Delete"};
 				int selecterOption=JOptionPane.showOptionDialog(null, "Do you want to update or delete?", "Update or delete teacher",
 						JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,options,options[0]);
@@ -553,7 +553,7 @@ private void activeBtn(int R,int G,int B,String a) {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						selectedforStd(stdForm);
-						System.out.println(Sex);
+//						System.out.println(Sex);
 						new UpdateTableInformation(0,stdForm.getUsernametextField().getText().trim(),stdForm.getPasswordtextField().getText().trim(),
 								stdForm.getFirstnametextField().getText().trim(),stdForm.getLastnametextField().getText().trim(),stdForm.getPhonenumtextField().getText().trim()
 								,Sex,stdForm.getAddresstextField().getText().trim(),stdForm.getEmailtextField().getText().trim(),level);
@@ -564,7 +564,7 @@ private void activeBtn(int R,int G,int B,String a) {
 					public void itemStateChanged(ItemEvent e) {
 						if(e.getStateChange() == 1) {
 							level = (String) e.getItem();
-							System.out.println(level);
+//							System.out.println(level);
 						}
 					}
 				});
@@ -617,7 +617,7 @@ private void activeBtn(int R,int G,int B,String a) {
 							public void itemStateChanged(ItemEvent e) {
 								if(e.getStateChange() == 1) {
 									level = (String) e.getItem();
-									System.out.println(level);
+//									System.out.println(level);
 								}
 							}
 						});
@@ -722,7 +722,6 @@ private void activeBtn(int R,int G,int B,String a) {
 							String oodpMark = seeMark.getLblDisplayoodpmark().getText().trim();
 							String CMark= seeMark.getLblDisplayCmark().getText().trim();
 							String percentage= seeMark.getLblDisplayPercentage().getText().trim();
-							System.out.println(id);
 							new UpdateTableInformation(id,fname,lname,oodpMark,CMark,percentage);
 						}
 						});

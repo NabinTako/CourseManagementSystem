@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 public class uploadAssignment {
 
-
+	// uploading assignment uploaded by the students in their separate modules.
 	public uploadAssignment(String modulename,String number,String name,String Q1,String Q2,String Q3,String Q4,String Ans1,String Ans2,String Ans3,String Ans4) {
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
@@ -21,10 +21,13 @@ public class uploadAssignment {
 			check(resultset);		
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			check(0);	
+//			e.printStackTrace();
 		}
 		
 	}
+
+	// uploading the assingment given by the teacher
 	public uploadAssignment(String modulename,String number,String name,String Q1,String Q2,String Q3,String Q4) {
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/datas", "root", "");
@@ -35,8 +38,9 @@ public class uploadAssignment {
 			int resultset = createStatement.executeUpdate(sqlQuery);
 			check(resultset);		
 		} catch (SQLException e) {
-
-			e.printStackTrace();
+			
+			check(0);	
+//			e.printStackTrace();
 		}
 		
 	}

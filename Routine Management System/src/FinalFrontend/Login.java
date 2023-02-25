@@ -252,7 +252,6 @@ public class Login {
 				}else {
 					ImageIcon imageIcon1 = new ImageIcon(new ImageIcon(Login.class.getResource("/images/seePassWord.png")).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
 					lblNewLabel_4.setIcon(imageIcon1);
-//					passwordField.setEchoChar('.');
 					passwordField.setEchoChar('*');
 					isShown = false;
 				}

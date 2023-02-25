@@ -71,9 +71,9 @@ public class courses_information {
 
 	}
 	
-	public static void main(String[] args) {
-		new courses_information();
-	}
+//	public static void main(String[] args) {
+//		new courses_information();
+//	}
 	
 	private static void check(int updateSucess) {
 		if(updateSucess>=1) {

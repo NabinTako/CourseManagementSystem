@@ -37,8 +37,7 @@ public class admin_info {
 					userName.add(resultset.getString("userName"));
 					passWord.add(resultset.getString("passWord"));
 					dataNum++;
-					System.err.println(resultset.getString("userName"));
-					System.err.println(resultset.getString("passWord"));
+					
 				}
 				
 			} catch (SQLException e) {
@@ -48,8 +47,8 @@ public class admin_info {
 			
 	}
 	
-	public static void main(String[] args) {
-		new admin_info();
-	}
+//	public static void main(String[] args) {
+//		new admin_info();
+//	}
 	
 }

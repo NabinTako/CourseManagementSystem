@@ -97,9 +97,9 @@ public class Teacher_info {
 			
 	}
 	
-	public static void main(String[] args) {
-		new Teacher_info();
-	}
+//	public static void main(String[] args) {
+//		new Teacher_info();
+//	}
 	
 
 }

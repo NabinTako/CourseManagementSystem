@@ -197,7 +197,7 @@ public class TeacherDashnoard {
 				Object[] options= {"Yes","No"};
 				int optionSelected=JOptionPane.showOptionDialog(null, "Are you sure you want to logout?", "Confirm Logout",
 						JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,options,options[0]);
-				System.out.println(optionSelected);
+			
 				if(optionSelected==0) {
 					Login window = new Login();
 					window.getFrame().setVisible(true);
@@ -455,7 +455,6 @@ public class TeacherDashnoard {
 			public void itemStateChanged(ItemEvent e) {
 				if(e.getStateChange() == 1) {
 					ModuleSelected = ((String) e.getItem()).toLowerCase();
-					System.out.println(ModuleSelected);
 				}
 			}
 		});
@@ -601,12 +600,12 @@ public class TeacherDashnoard {
 				if(see.getOodpnumber(rowselected).equals(viewWork.getValueAt(rowselected, 1)));{
 					ViewAssignment view = new ViewAssignment(see.getOodpname(rowselected),see.getOodpq1(rowselected),see.getOodpq2(rowselected),see.getOodpq3(rowselected),see.getOodpq4(rowselected),
 							see.getOodpAns1(rowselected),see.getOodpAns2(rowselected),see.getOodpAns3(rowselected),see.getOodpAns4(rowselected));
-					System.out.println(see.getOodpname(rowselected));
+				
 					view.setVisible(true);
 				}
 				}catch(Exception error) {
 					int indexForC = rowselected-see.getOodpsize();
-					System.out.println(indexForC);
+				
 					ViewAssignment view = new ViewAssignment(see.getCname(indexForC),see.getCq1(indexForC),see.getCq2(indexForC),see.getCq3(indexForC),see.getCq4(indexForC),
 							see.getCAns1(indexForC),see.getCAns2(indexForC),see.getCAns3(indexForC),see.getCAns4(indexForC));
 					view.setVisible(true);

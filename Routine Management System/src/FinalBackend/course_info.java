@@ -87,12 +87,9 @@ public class course_info {
 	
 
 
-	public static void main(String[] args) {
-		new course_info("bit");
-	}
+//	public static void main(String[] args) {
+//		new course_info("bit");
+//	}
 	
-	public void a() {
-		
-	}
 
 }

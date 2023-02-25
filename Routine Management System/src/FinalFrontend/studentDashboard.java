@@ -194,7 +194,7 @@ public class studentDashboard {
 				Object[] options= {"Yes","No"};
 				int optionSelected=JOptionPane.showOptionDialog(null, "Are you sure you want to logout?", "Confirm Logout",
 						JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,options,options[0]);
-				System.out.println(optionSelected);
+		
 				if(optionSelected==0) {
 					Login window = new Login();
 					window.getFrame().setVisible(true);
@@ -560,7 +560,7 @@ public class studentDashboard {
 		
 		displayCmarks = new JLabel("C");
 		displayCmarks.setFont(new Font("Arial", Font.ITALIC, 20));
-		JLabel lblPercentage = new JLabel("C");
+		JLabel lblPercentage = new JLabel("Percentage");
 		lblPercentage.setFont(new Font("Arial", Font.ITALIC, 20));
 		
 		lblDisplayPercentage = new JLabel("C");

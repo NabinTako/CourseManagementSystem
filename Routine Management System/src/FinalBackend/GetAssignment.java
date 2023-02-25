@@ -225,7 +225,6 @@ public class GetAssignment {
 				oodpans2.add(resultset.getString("Ans2"));
 				oodpans3.add(resultset.getString("Ans3"));
 				oodpans4.add(resultset.getString("Ans4"));
-				System.out.println(oodpname.get(i));
 				i++;
 			}
 		} catch (SQLException e) {
